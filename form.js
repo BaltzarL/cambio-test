@@ -67,7 +67,7 @@ export class AcmeSubmitButton extends HTMLElement {
       var gleasonScore = 0;
       var lesionLocationText = "";
       const gleasonScoreRoot = querySelector("c-input-count[name='T0_total_gleason_score']");
-      const lesionLocationRoot = querySelector("c-input-count[name='T0_location']");
+      const lesionLocationRoot = querySelector("c-input-select[name='T0_location']");
 
       // Listener for gleasonScoreRoot changes (for future use)
       gleasonScoreRoot?.addEventListener('input', function(event) {
