@@ -1,28 +1,30 @@
 export class AcmeSubmitButton extends HTMLElement {
-  constructor() {
-    super();
+    constructor() {
+        super();
 
-    // Create shadow DOM
-    const shadowRoot = this.attachShadow({ mode: 'open' });
+        // Create shadow DOM
+        const shadowRoot = this.attachShadow({
+            mode: 'open'
+        });
 
-    // Create a container for the image and overlays
-    const container = document.createElement('div');
-    container.style.position = 'relative'; // For positioning overlay images
-    container.style.display = 'inline-block';
+        // Create a container for the image and overlays
+        const container = document.createElement('div');
+        container.style.position = 'relative'; // For positioning overlay images
+        container.style.display = 'inline-block';
 
-    // Create the base image
-    const baseImage = document.createElement('img');
-    baseImage.src = 'https://github.com/BaltzarL/cambio-test/blob/main/images/base_image.png?raw=true'; // Replace with your image URL
-    baseImage.alt = 'Base Image';
-    baseImage.style.width = '300px'; // You can adjust the size as needed
+        // Create the base image
+        const baseImage = document.createElement('img');
+        baseImage.src = 'https://github.com/BaltzarL/cambio-test/blob/main/images/base_image.png?raw=true'; // Replace with your image URL
+        baseImage.alt = 'Base Image';
+        baseImage.style.width = '300px'; // You can adjust the size as needed
 
-    // Append the base image to the container
-    container.appendChild(baseImage);
-    shadowRoot.appendChild(container);
+        // Append the base image to the container
+        container.appendChild(baseImage);
+        shadowRoot.appendChild(container);
 
-    // Create a style tag for overlay styles
-    const style = document.createElement('style');
-    style.innerText = `
+        // Create a style tag for overlay styles
+        const style = document.createElement('style');
+        style.innerText = `
       img {
         display: block;
         border-radius: 0.5em;
@@ -36,31 +38,31 @@ export class AcmeSubmitButton extends HTMLElement {
         pointer-events: none; /* Prevent interfering with clicks */
       }
     `;
-    shadowRoot.appendChild(style);
+        shadowRoot.appendChild(style);
 
-    // Utility functions for querying elements in the shadow DOM
-    function querySelector(selector) {
-      return querySelectorAll(document, selector)[0];
-    }
+        // Utility functions for querying elements in the shadow DOM
+        function querySelector(selector) {
+            return querySelectorAll(document, selector)[0];
+        }
 
-    function querySelectorAll(node, selector) {
-      const nodes = [...node.querySelectorAll(selector)];
-      const nodeIterator = document.createNodeIterator(
-        node,
-        NodeFilter.SHOW_ELEMENT,
-        node => node instanceof Element && node.shadowRoot
-          ? NodeFilter.FILTER_ACCEPT
-          : NodeFilter.FILTER_REJECT,
-      );
+        function querySelectorAll(node, selector) {
+            const nodes = [...node.querySelectorAll(selector)];
+            const nodeIterator = document.createNodeIterator(
+                node,
+                NodeFilter.SHOW_ELEMENT,
+                node => node instanceof Element && node.shadowRoot ?
+                NodeFilter.FILTER_ACCEPT :
+                NodeFilter.FILTER_REJECT,
+            );
 
-      let currentNode = nodeIterator.nextNode();
-      while (currentNode) {
-        nodes.push(...querySelectorAll(currentNode.shadowRoot, selector));
-        currentNode = nodeIterator.nextNode();
-      }
+            let currentNode = nodeIterator.nextNode();
+            while (currentNode) {
+                nodes.push(...querySelectorAll(currentNode.shadowRoot, selector));
+                currentNode = nodeIterator.nextNode();
+            }
 
-      return nodes;
-    }
+            return nodes;
+        }
 
         // Wait until the DOM is ready
         setTimeout(() => {
@@ -121,7 +123,7 @@ export class AcmeSubmitButton extends HTMLElement {
                 container.appendChild(overlayImage1);
             }
         });
-  }
+    }
 }
 
 // Register the custom element
