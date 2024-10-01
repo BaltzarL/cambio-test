@@ -43,4 +43,3 @@ export class AcmeSubmitButton extends HTMLElement {
   }
   
   customElements.define('acme-submit-button', AcmeSubmitButton);
-  
