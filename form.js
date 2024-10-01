@@ -73,12 +73,12 @@ export class AcmeSubmitButton extends HTMLElement {
 
             gleasonScoreRoot?.addEventListener('input', function(event) {
                 gleasonScore = event.target.value;
-                console.log('gleasonScoreRoot value changed to:', event.target.value);
+                updateOverlay(lesionLocationText, gleasonScore);
             });
 
             lesionLocationRoot?.addEventListener('input', function(event) {
-                console.log('lesionLocationRoot value changed to:', event.target.value);
-                updateOverlay(event.target.text, gleasonScore);
+                lesionLocationText = event.target.text;
+                updateOverlay(lesionLocationText, gleasonScore);
             });
 
             function updateOverlay(location, score) {
