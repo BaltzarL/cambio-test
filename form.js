@@ -71,12 +71,12 @@ export class AcmeSubmitButton extends HTMLElement {
 
             gleasonScoreRoot?.addEventListener('input', function(event) {
                 gleasonScore = event.target.value;
-                updateOverlay(lesionLocationText, gleasonScore);
+                console.log('gleasonScoreRoot value changed to:', event.target.value);
             });
 
             lesionLocationRoot?.addEventListener('input', function(event) {
-                lesionLocationText = event.target.text;
-                updateOverlay(lesionLocationText, gleasonScore);
+                console.log('lesionLocationRoot value changed to:', event.target.value);
+                updateOverlay(event.target.text, gleasonScore);
             });
 
             function updateOverlay(location, score) {
@@ -106,7 +106,7 @@ export class AcmeSubmitButton extends HTMLElement {
                     yOffset = 110;
                 }
 
-                textOverlay?.innerText = section;
+                //textOverlay?.innerText = section;
 
                 const overlayImage1 = document.createElement('img');
                 overlayImage1.src = 'http://clipart-library.com/img1/1036648.png';
@@ -121,7 +121,7 @@ export class AcmeSubmitButton extends HTMLElement {
                 container.appendChild(overlayImage1);
             }
         });
-    }
+  }
 }
 
 // Register the custom element
