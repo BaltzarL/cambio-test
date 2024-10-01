@@ -51,13 +51,7 @@ export class AcmeSubmitButton extends HTMLElement {
      
        return nodes;
       }
-      var gleasonScoreRoot = querySelector("c-input-count[name='T0_total_gleason_score']");
-      
-      button.innerHTML = "value: ";
-      gleasonScoreRoot.addEventListener('input', function(event) {
-         button.innerHTML = "value: " + event.target.value;
-         console.log('Input value changed to:', event.target.value);
-     });
+
 
      
       button.addEventListener('click', () => {
@@ -67,7 +61,13 @@ export class AcmeSubmitButton extends HTMLElement {
       });
      
       setTimeout(() => {
-        this.innerHTML = 'Submit';
+      var gleasonScoreRoot = querySelector("c-input-count[name='T0_total_gleason_score']");
+      
+        button.innerHTML = "value: ";
+        gleasonScoreRoot?.addEventListener('input', function(event) {
+           button.innerHTML = "value: " + event.target.value;
+           console.log('Input value changed to:', event.target.value);
+       });
       });
     }
   }
