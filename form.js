@@ -28,12 +28,42 @@ export class AcmeSubmitButton extends HTMLElement {
         }
       `;
       shadowRoot.appendChild(style);
-  
+     /** https://stackoverflow.com/a/71666543 */
+     function querySelector(selector) {
+       return querySelectorAll(document, selector)[0];
+     }
+     
+     function querySelectorAll(node, selector) {
+       const nodes = [...node.querySelectorAll(selector)];
+       const nodeIterator = document.createNodeIterator(
+         node,
+         NodeFilter.SHOW_ELEMENT,
+         node => node instanceof Element && node.shadowRoot
+           ? NodeFilter.FILTER_ACCEPT
+           : NodeFilter.FILTER_REJECT,
+       );
+     
+       let currentNode = nodeIterator.nextNode();
+       while (currentNode) {
+         nodes.push(...querySelectorAll(currentNode.shadowRoot, selector));
+         currentNode = nodeIterator.nextNode();
+       }
+     
+       return nodes;
+      }
+      var gleasonScoreRoot = querySelector("c-input-count[name='T0_total_gleason_score']");
+      
+      button.innerHTML = "value: ";
+      gleasonScoreRoot.addEventListener('input', function(event) {
+         button.innerHTML = "value: " + event.target.value;
+         console.log('Input value changed to:', event.target.value);
+     });
+
+     
       button.addEventListener('click', () => {
-        const form = this.closest('c-form, form');
-        form.submit()
-          .then(() => alert('Form submitted!'))
-          .catch(() => alert('Failed to submit form'));
+          var _gleasonScoreRoot = querySelector("c-input-count[name='T0_total_gleason_score']");
+          console.log(_gleasonScoreRoot);
+          console.log(gleasonScoreRoot);
       });
      
       setTimeout(() => {
