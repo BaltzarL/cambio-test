@@ -96,15 +96,16 @@ export class AcmeSubmitButton extends HTMLElement {
             const lesionLocationRoot = querySelector("c-input-select[name='T0_location']");
 
             gleasonScoreRoot?.addEventListener('input', function(event) {
+                gleasonScore = event.target.value;
                 console.log('gleasonScoreRoot value changed to:', event.target.value);
             });
 
             lesionLocationRoot?.addEventListener('input', function(event) {
                 console.log('lesionLocationRoot value changed to:', event.target.value);
-                updateOverlay(event.target.text);
+                updateOverlay(event.target.text, gleasonScore);
             });
 
-            function updateOverlay(location) {
+            function updateOverlay(location, score) {
                 // Remove existing overlays
                 const existingOverlays = shadowRoot.querySelectorAll('.overlay-image');
                 existingOverlays.forEach(overlay => overlay.remove());
@@ -114,28 +115,21 @@ export class AcmeSubmitButton extends HTMLElement {
                 const column = location[2];
 
                 var xOffset = 0;
-                switch (row) {
-                    case '1':
-                        xOffset = 65;
-                        break;
-                    case '2':
-                        xOffset = 110;
-                        break;
-                    case '3':
-                        xOffset = 175;
-                        break;
-                    case '4':
-                        xOffset = 215;
-                        break;
+                if (row === '1') {
+                    xOffset = 65;
+                } else if (row === '2') {
+                    xOffset = 110;
+                } else if (row === '3') {
+                    xOffset = 175;
+                } else if (row === '4') {
+                    xOffset = 215;
                 }
+
                 var yOffset = 0;
-                switch (column) {
-                    case 'v':
-                        xOffset = 70;
-                        break;
-                    case 'd':
-                        yOffset = 110;
-                        break;
+                if (column === 'v') {
+                    yOffset = 70;
+                } else if (column === 'd') {
+                    yOffset = 110;
                 }
 
                 textOverlay?.innerText = section;
@@ -143,6 +137,11 @@ export class AcmeSubmitButton extends HTMLElement {
                 const overlayImage1 = document.createElement('img');
                 overlayImage1.src = 'http://clipart-library.com/img1/1036648.png';
                 overlayImage1.className = 'overlay-image';
+
+                // Calculate brightness based on Gleason score (from 2 to 10)
+                const brightness = 0.3 + ((score ?? 0) - 2) * 0.1; // 0.3 for Gleason score 2, 1.0 for score 10
+                overlayImage1.style.filter = `brightness(${brightness})`;
+
                 overlayImage1.style.top = yOffset + 'px';
                 overlayImage1.style.left = xOffset + 'px';
                 container.appendChild(overlayImage1);
