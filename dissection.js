@@ -31,9 +31,10 @@ export class DissectionImage extends HTMLElement {
       }
       .overlay-image {
         position: absolute;
-        width: 20px; /* Adjust overlay size as necessary */
-        height: 20px;
         pointer-events: none; /* Prevent interfering with clicks */
+      }
+      .gray-image {
+          filter: brightness(0) saturate(100%) invert(47%) sepia(2%) saturate(812%) hue-rotate(212deg) brightness(98%) contrast(89%);
       }
     `;
         shadowRoot.appendChild(style);
@@ -89,33 +90,35 @@ export class DissectionImage extends HTMLElement {
                 console.log("Sparing: " + sparing);
                 console.log("Dissection: " + dissection);
 
-                // Define positions for the overlays
-                const positions = {
-                    top: { top: '10%', left: '50%', transform: 'translate(-50%, -100%)' }, // Adjust top position
-                    middle: { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }, // Center position
-                    bottom: { top: '90%', left: '50%', transform: 'translate(-50%, 0)' } // Adjust bottom position
+                const apicalInformation = {
+                    apicalTop: {
+                        url: baseUrl + "apical_top.svg",
+                        position: { width: '11%', left: '150px', top: '223px' },
+                        name: "Max" // The drop-down values for each apical dissection
+                    },
+                    apicalMiddle: {
+                        url: baseUrl + "apical_middle.svg",
+                        position: { width: '12%', left: '147px', top: '234px' },
+                        name: "Apex",
+                    }
+                    apicalBottom: {
+                        url: baseUrl + "apical_bottom.svg",
+                        position: { top: '11%', left: '143px', top: '242px' },
+                        name: "Margin",
+                    }
                 };
 
-                // Append the overlay images based on the dissection value
-                const overlays = {
-                    apicalTop: baseUrl + "apical_top.svg",
-                    apicalMiddle: baseUrl + "apical_middle.svg",
-                    apicalBottom: baseUrl + "apical_bottom.svg"
-                };
-
-                for (const [key, src] of Object.entries(overlays)) {
+                for (const [key, info] of Object.entries(apicalInformation)) {
                     const overlay = document.createElement('img');
-                    overlay.src = src;
+                    overlay.src = info.url;
                     overlay.classList.add('overlay-image');
 
                     // Set position
-                    Object.assign(overlay.style, positions[key]);
+                    Object.assign(overlay.style, info.position);
 
-                    // Apply grayscale filter except for the middle overlay
-                    if (key === 'apicalMiddle') {
-                        overlay.style.filter = 'none'; // Keep color
-                    } else {
-                        overlay.style.filter = 'grayscale(100%)'; // Grayscale for other overlays
+                    // Apply grayscale filter on all unselected images
+                    if (dissection != info.name) {
+                       overlay.classList.add('.gray-image');
                     }
 
                     // Append overlay to container
