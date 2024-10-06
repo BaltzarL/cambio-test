@@ -84,7 +84,7 @@ export class DissectionImage extends HTMLElement {
 
                 const baseUrl = "https://raw.githubusercontent.com/BaltzarL/cambio-test/refs/heads/main/images/";
 
-                console.log("Sparing: " + sparing);
+                console.log("Sparing: " + isSparing);
                 console.log("Dissection: " + dissection);
 
                 const apicalInformation = {
