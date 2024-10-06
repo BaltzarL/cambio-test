@@ -33,9 +33,6 @@ export class DissectionImage extends HTMLElement {
         position: absolute;
         pointer-events: none; /* Prevent interfering with clicks */
       }
-      .gray-image {
-          filter: brightness(0) saturate(100%) invert(47%) sepia(2%) saturate(812%) hue-rotate(212deg) brightness(98%) contrast(89%);
-      }
     `;
         shadowRoot.appendChild(style);
 
@@ -103,10 +100,14 @@ export class DissectionImage extends HTMLElement {
                     },
                     apicalBottom: {
                         url: baseUrl + "apical_bottom.svg",
-                        position: { top: '11%', left: '143px', top: '242px' },
+                        position: { width: '11%', left: '143px', top: '242px' },
                         name: "Margin"
                     }
                 };
+
+                const grayscale = {
+                     filter: 'brightness(0) saturate(100%) invert(47%) sepia(2%) saturate(812%) hue-rotate(212deg) brightness(98%) contrast(89%)'
+                }
 
                 for (const [key, info] of Object.entries(apicalInformation)) {
                     const overlay = document.createElement('img');
@@ -118,7 +119,7 @@ export class DissectionImage extends HTMLElement {
 
                     // Apply grayscale filter on all unselected images
                     if (dissection != info.name) {
-                       overlay.classList.add('.gray-image');
+                        Object.assign(overlay.style, grayscale);
                     }
 
                     // Append overlay to container
