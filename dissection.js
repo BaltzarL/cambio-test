@@ -91,17 +91,17 @@ export class DissectionImage extends HTMLElement {
                     apicalTop: {
                         url: baseUrl + "apical_top.svg",
                         position: { width: '11%', left: '150px', top: '223px' },
-                        name: "Max" // The drop-down values for each apical dissection
+                        name: "at0021" // The drop-down values for each apical dissection
                     },
                     apicalMiddle: {
                         url: baseUrl + "apical_middle.svg",
                         position: { width: '12%', left: '147px', top: '234px' },
-                        name: "Apex",
+                        name: "at0022",
                     },
                     apicalBottom: {
                         url: baseUrl + "apical_bottom.svg",
                         position: { width: '11%', left: '143px', top: '242px' },
-                        name: "Margin"
+                        name: "at0023"
                     }
                 };
 
