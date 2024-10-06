@@ -100,11 +100,11 @@ export class DissectionImage extends HTMLElement {
                         url: baseUrl + "apical_middle.svg",
                         position: { width: '12%', left: '147px', top: '234px' },
                         name: "Apex",
-                    }
+                    },
                     apicalBottom: {
                         url: baseUrl + "apical_bottom.svg",
                         position: { top: '11%', left: '143px', top: '242px' },
-                        name: "Margin",
+                        name: "Margin"
                     }
                 };
 
