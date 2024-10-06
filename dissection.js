@@ -131,12 +131,12 @@ export class DissectionImage extends HTMLElement {
                     sparing: {
                         url: baseUrl + "bladder_bottom.svg",
                         position: { width: '12%', left: '10px', top: '10px' },
-                        sparing: true,
+                        isSparing: true,
                     },
                     nonSparing: {
                         url: baseUrl + "bladder_top.svg",
                         position: { width: '12%', left: '20px', top: '20px' },
-                        sparing: false,
+                        isSparing: false,
                     },
                 }
 
@@ -149,7 +149,7 @@ export class DissectionImage extends HTMLElement {
                     Object.assign(overlay.style, info.position);
 
                     // Apply grayscale filter on all unselected images
-                    if (sparing != info.sparing) {
+                    if (sparing != info.isSparing) {
                         Object.assign(overlay.style, grayscale);
                     }
 
