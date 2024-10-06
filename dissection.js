@@ -77,7 +77,7 @@ export class DissectionImage extends HTMLElement {
                 updateOverlay(bladderneckSparing, apicalDissectionValue);
             });
 
-            function updateOverlay(sparing, dissection) {
+            function updateOverlay(isSparing, dissection) {
                 // Remove existing overlays
                 const existingOverlays = shadowRoot.querySelectorAll('.overlay-image');
                 existingOverlays.forEach(overlay => overlay.remove());
@@ -127,7 +127,7 @@ export class DissectionImage extends HTMLElement {
                 }
 
                 // --- Bladder-neck sparing images
-                bladderSparingInformation = {
+                const bladderSparingInformation = {
                     sparing: {
                         url: baseUrl + "bladder_bottom.svg",
                         position: { width: '12%', left: '10px', top: '10px' },
@@ -149,7 +149,7 @@ export class DissectionImage extends HTMLElement {
                     Object.assign(overlay.style, info.position);
 
                     // Apply grayscale filter on all unselected images
-                    if (sparing != info.isSparing) {
+                    if (isSparing != info.isSparing) {
                         Object.assign(overlay.style, grayscale);
                     }
 
