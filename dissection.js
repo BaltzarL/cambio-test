@@ -130,12 +130,12 @@ export class DissectionImage extends HTMLElement {
                 const bladderSparingInformation = {
                     sparing: {
                         url: baseUrl + "bladder_bottom.svg",
-                        position: { width: '12%', left: '10px', top: '10px' },
+                        position: { width: '12%', left: '155px', top: '70px' },
                         isSparing: true,
                     },
                     nonSparing: {
                         url: baseUrl + "bladder_top.svg",
-                        position: { width: '12%', left: '20px', top: '20px' },
+                        position: { width: '13%', left: '150px', top: '60px' },
                         isSparing: false,
                     },
                 }
