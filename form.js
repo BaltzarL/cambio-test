@@ -14,7 +14,7 @@ export class AcmeSubmitButton extends HTMLElement {
 
         // Create the base image
         const baseImage = document.createElement('img');
-        baseImage.src = 'https://github.com/BaltzarL/cambio-test/blob/main/images/base_image.png?raw=true'; // Replace with your image URL
+        baseImage.src = 'https://github.com/BaltzarL/cambio-test/blob/main/images/base_image.png?raw=true';
         baseImage.alt = 'Base Image';
         baseImage.style.width = '300px'; // You can adjust the size as needed
 
