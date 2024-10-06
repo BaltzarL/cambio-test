@@ -62,10 +62,10 @@ export class DissectionImage extends HTMLElement {
 
         // Wait until the DOM is ready
         setTimeout(() => {
-            var bladderneckSparing = false;
-            var apicalDissectionValue = "";
             const bladderneckSparingRoot = querySelector("c-input-boolean[name='T0_bladderneck_sparing']");
             const apicalDissectionRoot = querySelector("c-input-select[name='T0_apical_dissection']");
+            var bladderneckSparing = bladderneckSparingRoot.value ?? false;
+            var apicalDissectionValue = apicalDissectionRoot ?? "";
 
             bladderneckSparingRoot?.addEventListener('input', function(event) {
                 bladderneckSparing = event.target.value;
@@ -125,7 +125,39 @@ export class DissectionImage extends HTMLElement {
                     // Append overlay to container
                     container.appendChild(overlay);
                 }
+
+                // --- Bladder-neck sparing images
+                bladderSparingInformation = {
+                    sparing: {
+                        url: baseUrl + "bladder_bottom.svg",
+                        position: { width: '12%', left: '10px', top: '10px' },
+                        sparing: true,
+                    },
+                    nonSparing: {
+                        url: baseUrl + "bladder_top.svg",
+                        position: { width: '12%', left: '20px', top: '20px' },
+                        sparing: false,
+                    },
+                }
+
+                for (const [key, info] of Object.entries(bladderSparingInformation)) {
+                    const overlay = document.createElement('img');
+                    overlay.src = info.url;
+                    overlay.classList.add('overlay-image');
+
+                    // Set position
+                    Object.assign(overlay.style, info.position);
+
+                    // Apply grayscale filter on all unselected images
+                    if (sparing != info.sparing) {
+                        Object.assign(overlay.style, grayscale);
+                    }
+
+                    container.appendChild(overlay);
+                }
             }
+
+            updateOverlay(bladderneckSparing, apicalDissectionValue);
         });
     }
 }
