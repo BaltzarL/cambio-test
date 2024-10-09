@@ -120,7 +120,7 @@ export class DissectionImage extends HTMLElement {
                     if (dissection != info.name) {
                         Object.assign(overlay.style, grayscale);
                     }
-                    element.addEventListener("click", function() {
+                    overlay.addEventListener("click", function() {
                         console.log("Clicked on " + info.name);
                         apicalDissectionRoot?.value = info.name;
                     });
