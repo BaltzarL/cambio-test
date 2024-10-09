@@ -31,6 +31,7 @@ export class DissectionImage extends HTMLElement {
       }
       .overlay-image {
         position: absolute;
+        cursor: pointer;
       }
     `;
         shadowRoot.appendChild(style);
