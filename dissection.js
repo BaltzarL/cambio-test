@@ -31,7 +31,6 @@ export class DissectionImage extends HTMLElement {
       }
       .overlay-image {
         position: absolute;
-        pointer-events: none; /* Prevent interfering with clicks */
       }
     `;
         shadowRoot.appendChild(style);
@@ -121,6 +120,10 @@ export class DissectionImage extends HTMLElement {
                     if (dissection != info.name) {
                         Object.assign(overlay.style, grayscale);
                     }
+                    element.addEventListener("click", function() {
+                        console.log("Clicked on " + info.name);
+                        apicalDissectionRoot?.value = info.name;
+                    });
 
                     // Append overlay to container
                     container.appendChild(overlay);
