@@ -124,6 +124,8 @@ export class DissectionImage extends HTMLElement {
                         console.log("Clicked on " + info.name);
                         if (apicalDissectionRoot) {
                             apicalDissectionRoot.value = info.name;
+                            apicalDissectionValue = info.name;
+                            updateOverlay(bladderneckSparing, apicalDissectionValue);
                         };
                     });
 
@@ -157,6 +159,15 @@ export class DissectionImage extends HTMLElement {
                     if (isSparing != info.isSparing) {
                         Object.assign(overlay.style, grayscale);
                     }
+
+                    overlay.addEventListener("click", function() {
+                        console.log("Clicked on " + info.name);
+                        if (bladderneckSparingRoot) {
+                            bladderneckSparingRoot.value = info.isSparing;
+                            bladderneckSparing = info.isSparing;
+                            updateOverlay(bladderneckSparing, apicalDissectionValue);
+                        };
+                    });
 
                     container.appendChild(overlay);
                 }
