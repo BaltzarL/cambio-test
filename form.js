@@ -61,7 +61,8 @@ export class AcmeSubmitButton extends HTMLElement {
         left: 0;
         width: 20px; /* Adjust overlay size as necessary */
         height: 20px;
-        pointer-events: none; /* Prevent interfering with clicks */
+        position: absolute;
+        cursor: pointer;
       }
     `;
         shadowRoot.appendChild(style);
@@ -198,7 +199,7 @@ export class AcmeSubmitButton extends HTMLElement {
                     });
 
                     // Append overlay to container
-                    container.appendChild(overlay);
+                    containerA.appendChild(overlay);
                 }
 
                 var xOffset = 0;
