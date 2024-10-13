@@ -24,22 +24,25 @@ export class AcmeSubmitButton extends HTMLElement {
         const prostateA = document.createElement('img');
         prostateA.src = 'https://github.com/BaltzarL/cambio-test/blob/main/images/prostate_A.png?raw=true';
         prostateA.alt = 'Base Image';
-        prostateA.style.width = '300px';
+        prostateA.style.width = '200px';
 
         const prostateB = document.createElement('img');
         prostateB.src = 'https://github.com/BaltzarL/cambio-test/blob/main/images/prostate_B.png?raw=true';
         prostateB.alt = 'Base Image';
-        prostateB.style.width = '300px';
+        prostateB.style.width = '200px';
 
         const prostateC = document.createElement('img');
         prostateC.src = 'https://github.com/BaltzarL/cambio-test/blob/main/images/prostate_C.png?raw=true';
         prostateC.alt = 'Base Image';
-        prostateC.style.width = '300px';
+        prostateC.style.width = '200px';
 
         // Append the base image to the container
         containerA.appendChild(prostateA);
         containerB.appendChild(prostateB);
         containerC.appendChild(prostateC);
+
+//        shadowRoot.style.display = 'flex';
+//        shadowRoot.style.flexDirection = 'row';
 
         shadowRoot.appendChild(containerA);
         shadowRoot.appendChild(containerB);
@@ -108,6 +111,8 @@ export class AcmeSubmitButton extends HTMLElement {
                 // Remove existing overlays
                 const existingOverlays = shadowRoot.querySelectorAll('.overlay-image');
                 existingOverlays.forEach(overlay => overlay.remove());
+
+                const baseUrl = "https://raw.githubusercontent.com/BaltzarL/cambio-test/refs/heads/main/images/";
 
                 const sparingInformation = {
                     none: {
