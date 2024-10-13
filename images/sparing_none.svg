@@ -1,1 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="69" height="114"><g><path d="M38.0001 94C33.8015 92.0906 29.6031 90.1813 25.5528 86.95 21.5025 83.7187 17.8475 80.6835 13.6984 74.6126 9.54927 68.5417 2.4366 59.1417 0.658497 50.525-1.11961 41.9083 1.05365 31.3333 3.02939 22.9126 5.00513 14.4918 8.75897 7.2459 12.5129 0" stroke="#843C0C" stroke-width="18.8" stroke-miterlimit="8" fill="none" fill-rule="evenodd" transform="matrix(-1 0 0 1 43.5 10.4999)"/><path d="M28 57C25.4681 52.5964 22.9362 48.1927 20.8511 40.375 18.7659 32.5573 18.9646 16.8229 15.4894 10.0937 12.0143 3.36452 6.00713 1.6822 0 0" stroke="#843C0C" stroke-width="17.2333" stroke-miterlimit="8" fill="none" fill-rule="evenodd" transform="matrix(-1 0 0 1 66.5001 14.5)"/><path d="M0 0 30.0001 8.00012 30.0001 8.00012" stroke="#843C0C" stroke-width="15.6667" stroke-miterlimit="8" fill="none" fill-rule="evenodd" transform="matrix(-1 0 0 1 64.0001 7.99994)"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="69" height="114">
+    <g>
+        <path
+            d="M38.0001 94C33.8015 92.0906 29.6031 90.1813 25.5528 86.95 21.5025 83.7187 17.8475 80.6835 13.6984 74.6126 9.54927 68.5417 2.4366 59.1417 0.658497 50.525-1.11961 41.9083 1.05365 31.3333 3.02939 22.9126 5.00513 14.4918 8.75897 7.2459 12.5129 0"
+            stroke="#843C0C" stroke-width="18.8" stroke-miterlimit="8" fill="none"
+            fill-rule="evenodd" transform="matrix(-1 0 0 1 43.5 10.4999)" />
+        <path
+            d="M28 57C25.4681 52.5964 22.9362 48.1927 20.8511 40.375 18.7659 32.5573 18.9646 16.8229 15.4894 10.0937 12.0143 3.36452 6.00713 1.6822 0 0"
+            stroke="#843C0C" stroke-width="17.2333" stroke-miterlimit="8" fill="none"
+            fill-rule="evenodd" transform="matrix(-1 0 0 1 66.5001 14.5)" />
+        <path d="M0 0 30.0001 8.00012 30.0001 8.00012" stroke="#843C0C" stroke-width="15.6667"
+            stroke-miterlimit="8" fill="none" fill-rule="evenodd"
+            transform="matrix(-1 0 0 1 64.0001 7.99994)" />
+    </g>
+</svg>

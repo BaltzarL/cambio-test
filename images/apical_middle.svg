@@ -1,4 +1,6 @@
-<svg style="position: absolute; left: 0px; top: 0px; width: 51px; height: 17px; z-index: 1; overflow: visible;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 29" width="96" height="29">
-    <path d="M2.00007 8.99993L86.4656 19.9751" stroke="#BF9000" stroke-width="17.5" fill="none"/>
+<svg
+    style="position: absolute; left: 0px; top: 0px; width: 51px; height: 17px; z-index: 1; overflow: visible;"
+    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 29" width="96" height="29">
+    <path d="M2.00007 8.99993L86.4656 19.9751" stroke="#BF9000" stroke-width="17.5" fill="none" />
 </svg>
 

@@ -8,19 +8,42 @@ export class AcmeSubmitButton extends HTMLElement {
         });
 
         // Create a container for the image and overlays
-        const container = document.createElement('div');
-        container.style.position = 'relative'; // For positioning overlay images
-        container.style.display = 'inline-block';
+        const containerA = document.createElement('div');
+        containerA.style.position = 'relative'; // For positioning overlay images
+        containerA.style.display = 'inline-block';
+
+        const containerB = document.createElement('div');
+        containerB.style.position = 'relative'; // For positioning overlay images
+        containerB.style.display = 'inline-block';
+
+        const containerC = document.createElement('div');
+        containerC.style.position = 'relative'; // For positioning overlay images
+        containerC.style.display = 'inline-block';
 
         // Create the base image
-        const baseImage = document.createElement('img');
-        baseImage.src = 'https://github.com/BaltzarL/cambio-test/blob/main/images/base_image.png?raw=true';
-        baseImage.alt = 'Base Image';
-        baseImage.style.width = '300px'; // You can adjust the size as needed
+        const prostateA = document.createElement('img');
+        prostateA.src = 'https://github.com/BaltzarL/cambio-test/blob/main/images/prostate_A.png?raw=true';
+        prostateA.alt = 'Base Image';
+        prostateA.style.width = '300px';
+
+        const prostateB = document.createElement('img');
+        prostateB.src = 'https://github.com/BaltzarL/cambio-test/blob/main/images/prostate_B.png?raw=true';
+        prostateB.alt = 'Base Image';
+        prostateB.style.width = '300px';
+
+        const prostateC = document.createElement('img');
+        prostateC.src = 'https://github.com/BaltzarL/cambio-test/blob/main/images/prostate_C.png?raw=true';
+        prostateC.alt = 'Base Image';
+        prostateC.style.width = '300px';
 
         // Append the base image to the container
-        container.appendChild(baseImage);
-        shadowRoot.appendChild(container);
+        containerA.appendChild(prostateA);
+        containerB.appendChild(prostateB);
+        containerC.appendChild(prostateC);
+
+        shadowRoot.appendChild(containerA);
+        shadowRoot.appendChild(containerB);
+        shadowRoot.appendChild(containerC);
 
         // Create a style tag for overlay styles
         const style = document.createElement('style');
@@ -86,9 +109,51 @@ export class AcmeSubmitButton extends HTMLElement {
                 const existingOverlays = shadowRoot.querySelectorAll('.overlay-image');
                 existingOverlays.forEach(overlay => overlay.remove());
 
+                const sparingInformation = {
+                    none: {
+                        url: baseUrl + "sparing_none.svg",
+                        position: { width: '11%', left: '150px', top: '223px' },
+                        name: "at0014"
+                    },
+                    semi: {
+                        url: baseUrl + "sparing_semi.svg",
+                        position: { width: '11%', left: '150px', top: '223px' },
+                        name: "at0013"
+                    },
+                    interLow: {
+                        url: baseUrl + "sparing_inter.svg",
+                        position: { width: '11%', left: '150px', top: '223px' },
+                        name: "at0012"
+                    },
+                    interHigh: {
+                        url: baseUrl + "sparing_inter.svg",
+                        position: { width: '11%', left: '150px', top: '223px' },
+                        name: "at0011"
+                    },
+                    intraLow: {
+                        url: baseUrl + "sparing_intra.svg",
+                        position: { width: '11%', left: '150px', top: '223px' },
+                        name: "at0010"
+                    },
+                    intraHigh: {
+                        url: baseUrl + "sparing_intra.svg",
+                        position: { width: '11%', left: '150px', top: '223px' },
+                        name: "at0009"
+                    }
+                };
+
                 const row = location[0];
                 const section = location[1];
                 const column = location[2];
+
+                var container = containerA
+                if (section === 'A') {
+                    container = containerA;
+                } else if (section === 'B') {
+                    container = containerB;
+                } else if (section === 'C') {
+                    container = containerC;
+                }
 
                 var xOffset = 0;
                 if (row === '1') {
@@ -111,12 +176,12 @@ export class AcmeSubmitButton extends HTMLElement {
                 //textOverlay?.innerText = section;
 
                 const overlayImage1 = document.createElement('img');
-                overlayImage1.src = 'http://clipart-library.com/img1/1036648.png';
+                overlayImage1.src = 'https://raw.githubusercontent.com/BaltzarL/cambio-test/refs/heads/main/images/dot_overlay.svg';
                 overlayImage1.className = 'overlay-image';
 
                 // Calculate brightness based on Gleason score (from 2 to 10)
-                const brightness = 0.3 + ((score ?? 0) - 2) * 0.1; // 0.3 for Gleason score 2, 1.0 for score 10
-                overlayImage1.style.filter = `brightness(${brightness})`;
+//                const brightness = 0.3 + ((score ?? 0) - 2) * 0.1; // 0.3 for Gleason score 2, 1.0 for score 10
+//                overlayImage1.style.filter = `brightness(${brightness})`;
 
                 overlayImage1.style.top = yOffset + 'px';
                 overlayImage1.style.left = xOffset + 'px';

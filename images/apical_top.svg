@@ -1,3 +1,6 @@
-    <svg style="position: absolute; left: 0px; top: 0xp; z-index: 1; overflow: visible;" width="94" height="36" xmlns="http://www.w3.org/2000/svg">
-        <path d="M5.90839 21.7237C13.838 17.4206 21.7676 13.1174 30.8068 11.7961C39.846 10.4749 50.4982 11.3127 60.1434 13.7954C69.7886 16.2781 79.2333 21.4846 88.6778 26.6915" stroke="#FFE699" stroke-width="21.2" fill="none"/>
-    </svg>
+<svg style="position: absolute; left: 0px; top: 0xp; z-index: 1; overflow: visible;" width="94"
+    height="36" xmlns="http://www.w3.org/2000/svg">
+    <path
+        d="M5.90839 21.7237C13.838 17.4206 21.7676 13.1174 30.8068 11.7961C39.846 10.4749 50.4982 11.3127 60.1434 13.7954C69.7886 16.2781 79.2333 21.4846 88.6778 26.6915"
+        stroke="#FFE699" stroke-width="21.2" fill="none" />
+</svg>
