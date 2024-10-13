@@ -132,6 +132,15 @@ export class AcmeSubmitButton extends HTMLElement {
                 const section = location[1];
                 const column = location[2];
 
+                var container = containerA
+                if (section === 'A') {
+                    container = containerA;
+                } else if (section === 'B') {
+                    container = containerB;
+                } else if (section === 'C') {
+                    container = containerC;
+                }
+
                 const sparingInformation = {
                     none: {
                         url: baseUrl + "sparing_none.svg",
@@ -190,15 +199,6 @@ export class AcmeSubmitButton extends HTMLElement {
 
                     // Append overlay to container
                     container.appendChild(overlay);
-                }
-
-                var container = containerA
-                if (section === 'A') {
-                    container = containerA;
-                } else if (section === 'B') {
-                    container = containerB;
-                } else if (section === 'C') {
-                    container = containerC;
                 }
 
                 var xOffset = 0;
