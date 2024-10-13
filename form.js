@@ -123,6 +123,11 @@ export class AcmeSubmitButton extends HTMLElement {
                 existingOverlays.forEach(overlay => overlay.remove());
 
                 const baseUrl = "https://raw.githubusercontent.com/BaltzarL/cambio-test/refs/heads/main/images/";
+
+                const grayscale = {
+                    filter: 'brightness(0) saturate(100%) invert(47%) sepia(2%) saturate(812%) hue-rotate(212deg) brightness(98%) contrast(89%)'
+                }
+
                 const row = location[0];
                 const section = location[1];
                 const column = location[2];
