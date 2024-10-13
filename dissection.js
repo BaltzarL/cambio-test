@@ -124,7 +124,7 @@ export class DissectionImage extends HTMLElement {
                     const overlay = document.createElement('img');
                     overlay.src = info.url;
                     overlay.classList.add('overlay-image');
-                    overlay.title = findOptionByValue(apicalDissectionRoot, info.name).label;
+                    overlay.title = findOptionByValue(apicalDissectionRoot, info.name).text;
 
                     // Set position
                     Object.assign(overlay.style, info.position);
