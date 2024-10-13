@@ -102,16 +102,6 @@ export class AcmeSubmitButton extends HTMLElement {
             const sparingDxRoot = querySelector("c-input-select[name='T0_nerve_sparing_dx']");
             const sparingSinRoot = querySelector("c-input-select[name='T0_nerve_sparing_sin']");
 
-            gleasonScoreRoot?.addEventListener('input', function(event) {
-                gleasonScore = event.target.value;
-                updateOverlay();
-            });
-
-            lesionLocationRoot?.addEventListener('input', function(event) {
-                lesionLocationText = event.target.text;
-                updateOverlay();
-            });
-
             function updateOverlay() {
                 updateOverlay(lesionLocationText, gleasonScore, prostateSparingDx, prostateSparingSin);
             };
@@ -229,6 +219,17 @@ export class AcmeSubmitButton extends HTMLElement {
                 overlayImage1.style.left = xOffset + 'px';
                 container.appendChild(overlayImage1);
             }
+
+            gleasonScoreRoot?.addEventListener('input', function(event) {
+                gleasonScore = event.target.value;
+                updateOverlay();
+            });
+
+            lesionLocationRoot?.addEventListener('input', function(event) {
+                lesionLocationText = event.target.text;
+                updateOverlay();
+            });
+
         });
     }
 }
