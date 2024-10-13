@@ -36,6 +36,17 @@ export class DissectionImage extends HTMLElement {
     `;
         shadowRoot.appendChild(style);
 
+        function findOptionByValue(selectElement, valueToFind) {
+            let foundOption = null;
+
+            Array.from(selectElement.options).forEach(option => {
+                if (option.value === valueToFind) {
+                    foundOption = option;
+                }
+            });
+            return foundOption;
+        }
+
         // Utility functions for querying elements in the shadow DOM
         function querySelector(selector) {
             return querySelectorAll(document, selector)[0];
@@ -91,7 +102,7 @@ export class DissectionImage extends HTMLElement {
                     apicalTop: {
                         url: baseUrl + "apical_top.svg",
                         position: { width: '11%', left: '150px', top: '223px' },
-                        name: "at0021" // The drop-down values for each apical dissection
+                        name: "at0021", // The drop-down values for each apical dissection
                     },
                     apicalMiddle: {
                         url: baseUrl + "apical_middle.svg",
@@ -106,13 +117,14 @@ export class DissectionImage extends HTMLElement {
                 };
 
                 const grayscale = {
-                     filter: 'brightness(0) saturate(100%) invert(47%) sepia(2%) saturate(812%) hue-rotate(212deg) brightness(98%) contrast(89%)'
+                    filter: 'brightness(0) saturate(100%) invert(47%) sepia(2%) saturate(812%) hue-rotate(212deg) brightness(98%) contrast(89%)'
                 }
 
                 for (const [key, info] of Object.entries(apicalInformation)) {
                     const overlay = document.createElement('img');
                     overlay.src = info.url;
                     overlay.classList.add('overlay-image');
+                    overlay.title = findOptionByValue(apicalDissectionRoot, info.name).label;
 
                     // Set position
                     Object.assign(overlay.style, info.position);
@@ -121,6 +133,7 @@ export class DissectionImage extends HTMLElement {
                     if (dissection != info.name) {
                         Object.assign(overlay.style, grayscale);
                     }
+
                     overlay.addEventListener("click", function() {
                         console.log("Clicked on " + info.name);
                         if (apicalDissectionRoot) {
@@ -140,11 +153,13 @@ export class DissectionImage extends HTMLElement {
                         url: baseUrl + "bladder_bottom.svg",
                         position: { width: '12%', left: '155px', top: '70px' },
                         isSparing: true,
+                        tooltip: "Bladdernack sparing"
                     },
                     nonSparing: {
                         url: baseUrl + "bladder_top.svg",
                         position: { width: '13%', left: '150px', top: '60px' },
                         isSparing: false,
+                        tooltip: "No bladdernack sparing"
                     },
                 }
 
@@ -152,6 +167,7 @@ export class DissectionImage extends HTMLElement {
                     const overlay = document.createElement('img');
                     overlay.src = info.url;
                     overlay.classList.add('overlay-image');
+                    overlay.title = info.tooltip;
 
                     // Set position
                     Object.assign(overlay.style, info.position);
