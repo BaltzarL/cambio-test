@@ -139,7 +139,7 @@ export class AcmeSubmitButton extends HTMLElement {
                 var container = containerA
                 if (section === 'A') {
                     container = containerA;
-                    imageWidthScaling = 1;
+                    imageWidthScaling = 1.2;
                 } else if (section === 'B') {
                     container = containerB;
                     imageWidthScaling = 1;
@@ -150,20 +150,20 @@ export class AcmeSubmitButton extends HTMLElement {
 
                 var xOffset = 0;
                 if (row === '1') {
-                    xOffset = 65;
+                    xOffset = 40;
                 } else if (row === '2') {
-                    xOffset = 110;
+                    xOffset = 70;
                 } else if (row === '3') {
-                    xOffset = 175;
+                    xOffset = 120;
                 } else if (row === '4') {
-                    xOffset = 215;
+                    xOffset = 150;
                 }
 
                 var yOffset = 0;
                 if (column === 'v') {
-                    yOffset = 70;
+                    yOffset = 65;
                 } else if (column === 'd') {
-                    yOffset = 110;
+                    yOffset = 100;
                 }
 
 
