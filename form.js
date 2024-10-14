@@ -48,6 +48,10 @@ export class AcmeSubmitButton extends HTMLElement {
         shadowRoot.appendChild(containerB);
         shadowRoot.appendChild(containerC);
 
+        // Add padding to make space for dissection overlay
+        shadowRoot.style.paddingLeft = "200px"
+        shadowRoot.style.paddingRight = "200px"
+
         // Create a style tag for overlay styles
         const style = document.createElement('style');
         style.innerText = `
@@ -185,34 +189,26 @@ export class AcmeSubmitButton extends HTMLElement {
                         nameLeft: "at0013",
                         nameRight: "at0019",
                     },
-                    interLow: {
+                    inter: {
                         url: baseUrl + "sparing_inter.svg",
                         positionRight: { width: '20%', left: '180px', top: '70px' },
                         positionLeft: { width: '20%', left: '-14px', top: '70px' },
                         nameLeft: "at0012",
-                        nameRight: "at0018"
+                        nameRight: "at0018",
+                        // Extra buttons for clicking in the top part of the element
+                        nameLeftTop: "at0011",
+                        nameRightTop: "at0017",
                     },
-//                    interHigh: {
-//                        url: baseUrl + "sparing_inter.svg",
-//                        positionRight: { width: '20%', left: '166px', top: '70px' },
-//                        positionLeft: { width: '20%', left: '166px', top: '70px' },
-//                        nameLeft: "at0011",
-//                        nameRight: "at0017"
-//                    },
-                    intraLow: {
+                    intra: {
                         url: baseUrl + "sparing_intra.svg",
                         positionRight: { width: '20%', left: '166px', top: '70px' },
                         positionLeft: { width: '20%', left: '0px', top: '70px' },
                         nameLeft: "at0010",
-                        nameRight: "at0016"
+                        nameRight: "at0016",
+                        // Extra buttons for clicking in the top part of the element
+                        nameLeftTop: "at0009",
+                        nameRightTop: "at0015",
                     },
-//                    intraHigh: {
-//                        url: baseUrl + "sparing_intra.svg",
-//                        positionRight: { width: '20%', left: '166px', top: '70px' },
-//                        positionLeft: { width: '20%', left: '166px', top: '70px' },
-//                        nameLeft: "at0009",
-//                        nameRight: "at0015"
-//                    }
                 };
 
                 for (const [key, info] of Object.entries(sparingInformation)) {
@@ -240,20 +236,32 @@ export class AcmeSubmitButton extends HTMLElement {
                     // Reverse the left
                     overlayLeft.style.transform = 'scaleX(-1)'
 
-                    overlayRight.addEventListener("click", function() {
-                        console.log("Clicked on " + info.nameRight);
+                    overlayRight.addEventListener("click", function(event) {
+                        const overlayHeight = overlayRight.clientHeight; // Get the height of overlayLeft
+                        const clickY = event.clientY - overlayRight.getBoundingClientRect().top; // Get the Y coordinate relative to overlayLeft
+                        const clickTop = clickY < overlayHeight / 2;
+
+                        const selectedName = clickTop ? (info.nameRightTop ?? info.nameRight) : info.nameRight;
+
+                        console.log("Clicked on " + selectedName + ", Clicked top: " + clickTop);
                         if (sparingSinRoot) {
-                            sparingSinRoot.value = info.nameRight;
-                            prostateSparingSin = info.nameRight;
+                            sparingSinRoot.value = selectedName;
+                            prostateSparingSin = selectedName;
                             refreshOverlay();
                         };
                     });
 
-                    overlayLeft.addEventListener("click", function() {
-                        console.log("Clicked on " + info.nameLeft);
+                    overlayLeft.addEventListener("click", function(event) {
+                        const overlayHeight = overlayLeft.clientHeight; // Get the height of overlayLeft
+                        const clickY = event.clientY - overlayLeft.getBoundingClientRect().top; // Get the Y coordinate relative to overlayLeft
+                        const clickTop = clickY < overlayHeight / 2;
+
+                        const selectedName = clickTop ? (info.nameLeftTop ?? info.nameLeft) : info.nameLeft;
+
+                        console.log("Clicked on " + selectedName + ", Clicked top: " + clickTop);
                         if (sparingDxRoot) {
-                            sparingDxRoot.value = info.nameLeft;
-                            prostateSparingDx = info.nameLeft;
+                            sparingDxRoot.value = selectedName;
+                            prostateSparingDx = selectedName;
                             refreshOverlay();
                         };
                     });
