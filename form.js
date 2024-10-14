@@ -117,41 +117,20 @@ export class AcmeSubmitButton extends HTMLElement {
             const sparingDxRoot = querySelector("c-input-select[name='T0_nerve_sparing_dx']");
             const sparingSinRoot = querySelector("c-input-select[name='T0_nerve_sparing_sin']");
 
-            function refreshOverlay() {
-                updateOverlay(lesionLocationText, gleasonScore, prostateSparingDx, prostateSparingSin);
-            };
+            const baseUrl = "https://raw.githubusercontent.com/BaltzarL/cambio-test/refs/heads/main/images/";
 
-            function updateOverlay(location, score, sparingDx, sparingSin) {
-                // Remove existing overlays
-                const existingOverlays = shadowRoot.querySelectorAll('.overlay-image');
-                existingOverlays.forEach(overlay => overlay.remove());
+            const grayscale = {
+                filter: 'brightness(0) saturate(100%) invert(47%) sepia(2%) saturate(812%) hue-rotate(212deg) brightness(98%) contrast(89%)'
+            }
 
-                const baseUrl = "https://raw.githubusercontent.com/BaltzarL/cambio-test/refs/heads/main/images/";
-
-                const grayscale = {
-                    filter: 'brightness(0) saturate(100%) invert(47%) sepia(2%) saturate(812%) hue-rotate(212deg) brightness(98%) contrast(89%)'
-                }
+            function updateLocation(location, score) {
+                if (!location) return;
 
                 // Get the row, section and column from the location
                 // E.g "1Cd" means row "1", section "C" and column "d"
                 const row = location[0];
                 const section = location[1];
                 const column = location[2];
-
-                // Scale the x coordinates for the different prostatectomy images
-                var imageWidthScaling = 1;
-
-                var container = containerA
-                if (section === 'A') {
-                    container = containerA;
-                    imageWidthScaling = 1.2;
-                } else if (section === 'B') {
-                    container = containerB;
-                    imageWidthScaling = 1;
-                } else if (section === 'C') {
-                    container = containerC;
-                    imageWidthScaling = 1;
-                }
 
                 var xOffset = 0;
                 if (row === '1') {
@@ -171,6 +150,52 @@ export class AcmeSubmitButton extends HTMLElement {
                     yOffset = 100;
                 }
 
+                // Scale the x coordinates for the different prostatectomy images
+                var imageWidthScaling = 1;
+
+                var container = containerA
+                if (section === 'A') {
+                    container = containerA;
+                    imageWidthScaling = 1.2;
+                } else if (section === 'B') {
+                    container = containerB;
+                    imageWidthScaling = 1;
+                } else if (section === 'C') {
+                    container = containerC;
+                    imageWidthScaling = 1;
+                }
+
+                const dotOverlay = document.createElement('img');
+                dotOverlay.src = 'https://raw.githubusercontent.com/BaltzarL/cambio-test/refs/heads/main/images/dot_overlay.svg';
+                dotOverlay.className = 'overlay-image';
+                dotOverlay.style.width = "20px"
+                dotOverlay.style.height = "20px"
+
+                // Mirror image on the left
+                const isLeft = row === '1' || row === '2';
+                if (isLeft) {
+                    dotOverlay.style.transform = 'scaleX(-1)'
+                }
+                dotOverlay.title = location;
+
+                // Calculate brightness based on Gleason score (from 2 to 10)
+                //                const brightness = 0.3 + ((score ?? 0) - 2) * 0.1; // 0.3 for Gleason score 2, 1.0 for score 10
+                //                dotOverlay.style.filter = `brightness(${brightness})`;
+
+                dotOverlay.style.top = yOffset + 'px';
+                dotOverlay.style.left = xOffset + 'px';
+                container.appendChild(dotOverlay);
+            }
+
+            function refreshOverlay() {
+                updateOverlay(lesionLocationText, gleasonScore, prostateSparingDx, prostateSparingSin);
+            };
+
+            function updateOverlay(location, score, sparingDx, sparingSin) {
+                // Remove existing overlays
+                const existingOverlays = shadowRoot.querySelectorAll('.overlay-image');
+                existingOverlays.forEach(overlay => overlay.remove());
+                updateLocation(location, score);
 
                 // Dex = Left (on image)
                 // Sin = Right (on image)
@@ -274,27 +299,6 @@ export class AcmeSubmitButton extends HTMLElement {
                 }
 
                 //textOverlay?.innerText = section;
-
-                const dotOverlay = document.createElement('img');
-                dotOverlay.src = 'https://raw.githubusercontent.com/BaltzarL/cambio-test/refs/heads/main/images/dot_overlay.svg';
-                dotOverlay.className = 'overlay-image';
-                dotOverlay.style.width = "20px"
-                dotOverlay.style.height = "20px"
-
-                // Mirror image on the left
-                const isLeft = row === '1' || row === '2';
-                if (isLeft) {
-                    dotOverlay.style.transform = 'scaleX(-1)'
-                }
-                dotOverlay.title = location;
-
-                // Calculate brightness based on Gleason score (from 2 to 10)
-                //                const brightness = 0.3 + ((score ?? 0) - 2) * 0.1; // 0.3 for Gleason score 2, 1.0 for score 10
-                //                dotOverlay.style.filter = `brightness(${brightness})`;
-
-                dotOverlay.style.top = yOffset + 'px';
-                dotOverlay.style.left = xOffset + 'px';
-                container.appendChild(dotOverlay);
             }
 
             gleasonScoreRoot?.addEventListener('input', function(event) {
