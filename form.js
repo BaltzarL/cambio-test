@@ -229,7 +229,7 @@ export class AcmeSubmitButton extends HTMLElement {
                     Object.assign(overlayLeft.style, info.positionLeft);
 
                     // Apply grayscale filter on all unselected images
-                    if (sparingDx != info.nameLeft && sparingSin != info.nameLeftTop) {
+                    if (sparingDx != info.nameLeft && sparingDx != info.nameLeftTop) {
                         Object.assign(overlayLeft.style, grayscale);
                     }
                     if (sparingSin != info.nameRight && sparingSin != info.nameRightTop){
