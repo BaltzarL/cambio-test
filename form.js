@@ -307,6 +307,17 @@ export class AcmeSubmitButton extends HTMLElement {
                 refreshOverlay();
             });
 
+            sparingSinRoot?.addEventListener('input', function(event) {
+                prostateSparingSin = event.target.value;
+                refreshOverlay();
+            });
+
+            sparingDxRoot?.addEventListener('input', function(event) {
+                prostateSparingDx = event.target.value;
+                refreshOverlay();
+            });
+
+            refreshOverlay();
         });
     }
 }
