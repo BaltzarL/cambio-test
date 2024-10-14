@@ -150,19 +150,13 @@ export class AcmeSubmitButton extends HTMLElement {
                     yOffset = 100;
                 }
 
-                // Scale the x coordinates for the different prostatectomy images
-                var imageWidthScaling = 1;
-
                 var container = containerA
                 if (section === 'A') {
                     container = containerA;
-                    imageWidthScaling = 1.2;
                 } else if (section === 'B') {
                     container = containerB;
-                    imageWidthScaling = 1;
                 } else if (section === 'C') {
                     container = containerC;
-                    imageWidthScaling = 1;
                 }
 
                 const dotOverlay = document.createElement('img');
