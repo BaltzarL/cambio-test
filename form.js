@@ -172,23 +172,23 @@ export class AcmeSubmitButton extends HTMLElement {
                     none: {
                         url: baseUrl + "sparing_none.svg",
                         // Terrible solution, but not sure how to do it better
-                        positionRight: { width: '20%', left: '230px', top: '70px' },
-                        positionLeft: { width: '20%', left: '-30px', top: '70px' },
+                        positionRight: { width: '30%', left: '208px', top: '60px' },
+                        positionLeft: { width: '30%', left: '-42px', top: '70px' },
                         // The coded text IDs
                         nameLeft: "at0014",
                         nameRight: "at0020",
                     },
                     semi: {
                         url: baseUrl + "sparing_semi.svg",
-                        positionRight: { width: '20%', left: '210px', top: '70px' },
-                        positionLeft: { width: '20%', left: '-10px', top: '70px' },
+                        positionRight: { width: '20%', left: '196px', top: '70px' },
+                        positionLeft: { width: '20%', left: '-30px', top: '70px' },
                         nameLeft: "at0013",
                         nameRight: "at0019",
                     },
                     interLow: {
                         url: baseUrl + "sparing_inter.svg",
-                        positionRight: { width: '20%', left: '190px', top: '70px' },
-                        positionLeft: { width: '20%', left: '10px', top: '70px' },
+                        positionRight: { width: '20%', left: '180px', top: '70px' },
+                        positionLeft: { width: '20%', left: '-14px', top: '70px' },
                         nameLeft: "at0012",
                         nameRight: "at0018"
                     },
@@ -202,7 +202,7 @@ export class AcmeSubmitButton extends HTMLElement {
                     intraLow: {
                         url: baseUrl + "sparing_intra.svg",
                         positionRight: { width: '20%', left: '166px', top: '70px' },
-                        positionLeft: { width: '20%', left: '34px', top: '70px' },
+                        positionLeft: { width: '20%', left: '0px', top: '70px' },
                         nameLeft: "at0010",
                         nameRight: "at0016"
                     },
