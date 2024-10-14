@@ -7,13 +7,15 @@ export class AcmeSubmitButton extends HTMLElement {
             mode: 'open'
         });
 
+        const rootContainer = document.createElement('div');
+        // Add padding to make space for dissection overlay
+        rootContainer.style.paddingLeft = "200px"
+        rootContainer.style.paddingRight = "200px"
+
         // Create a container for the image and overlays
         const containerA = document.createElement('div');
         containerA.style.position = 'relative'; // For positioning overlay images
         containerA.style.display = 'inline-block';
-        // Add padding to make space for dissection overlay
-        containerA.style.paddingLeft = "200px"
-        containerA.style.paddingRight = "200px"
 
         const containerB = document.createElement('div');
         containerB.style.position = 'relative'; // For positioning overlay images
@@ -47,9 +49,10 @@ export class AcmeSubmitButton extends HTMLElement {
         //        shadowRoot.style.display = 'flex';
         //        shadowRoot.style.flexDirection = 'row';
 
-        shadowRoot.appendChild(containerA);
-        shadowRoot.appendChild(containerB);
-        shadowRoot.appendChild(containerC);
+        rootContainer.appendChild(containerA);
+        rootContainer.appendChild(containerB);
+        rootContainer.appendChild(containerC);
+        shadowRoot.appendChild(rootContainer);
 
         // Create a style tag for overlay styles
         const style = document.createElement('style');
