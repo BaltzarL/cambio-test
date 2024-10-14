@@ -218,6 +218,8 @@ export class AcmeSubmitButton extends HTMLElement {
                 for (const [key, info] of Object.entries(sparingInformation)) {
                     const overlayRight = document.createElement('img');
                     const overlayLeft = document.createElement('img');
+                    overlayRight.className = 'overlay-image';
+                    overlayLeft.className = 'overlay-image';
                     overlayRight.src = info.url;
                     overlayLeft.src = info.url;
                     //                    overlay.classList.add('overlay-image');
