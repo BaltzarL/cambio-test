@@ -173,7 +173,7 @@ export class AcmeSubmitButton extends HTMLElement {
                         url: baseUrl + "sparing_none.svg",
                         // Terrible solution, but not sure how to do it better
                         positionRight: { width: '30%', left: '208px', top: '60px' },
-                        positionLeft: { width: '30%', left: '-42px', top: '70px' },
+                        positionLeft: { width: '30%', left: '-62px', top: '60px' },
                         // The coded text IDs
                         nameLeft: "at0014",
                         nameRight: "at0020",
@@ -232,10 +232,10 @@ export class AcmeSubmitButton extends HTMLElement {
 
                     // Apply grayscale filter on all unselected images
                     if (sparingDx != info.nameLeft) {
-                        Object.assign(overlayRight.style, grayscale);
+                        Object.assign(overlayLeft.style, grayscale);
                     }
                     if (sparingSin != info.nameRight){
-                        Object.assign(overlayLeft.style, grayscale);
+                        Object.assign(overlayRight.style, grayscale);
                     }
                     // Reverse the left
                     overlayLeft.style.transform = 'scaleX(-1)'
