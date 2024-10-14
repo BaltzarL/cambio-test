@@ -57,10 +57,6 @@ export class AcmeSubmitButton extends HTMLElement {
       }
       .overlay-image {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px; /* Adjust overlay size as necessary */
-        height: 20px;
         position: absolute;
         cursor: pointer;
       }
@@ -267,24 +263,26 @@ export class AcmeSubmitButton extends HTMLElement {
 
                 //textOverlay?.innerText = section;
 
-                const overlayImage1 = document.createElement('img');
-                overlayImage1.src = 'https://raw.githubusercontent.com/BaltzarL/cambio-test/refs/heads/main/images/dot_overlay.svg';
-                overlayImage1.className = 'overlay-image';
+                const dotOverlay = document.createElement('img');
+                dotOverlay.src = 'https://raw.githubusercontent.com/BaltzarL/cambio-test/refs/heads/main/images/dot_overlay.svg';
+                dotOverlay.className = 'overlay-image';
+                dotOverlay.width = "20px"
+                dotOverlay.height = "20px"
 
                 // Mirror image on the left
                 const isLeft = row === '1' || row === '2';
                 if (isLeft) {
-                    overlayImage1.style.transform = 'scaleX(-1)'
+                    dotOverlay.style.transform = 'scaleX(-1)'
                 }
-                overlayImage1.title = location;
+                dotOverlay.title = location;
 
                 // Calculate brightness based on Gleason score (from 2 to 10)
                 //                const brightness = 0.3 + ((score ?? 0) - 2) * 0.1; // 0.3 for Gleason score 2, 1.0 for score 10
-                //                overlayImage1.style.filter = `brightness(${brightness})`;
+                //                dotOverlay.style.filter = `brightness(${brightness})`;
 
-                overlayImage1.style.top = yOffset + 'px';
-                overlayImage1.style.left = xOffset + 'px';
-                container.appendChild(overlayImage1);
+                dotOverlay.style.top = yOffset + 'px';
+                dotOverlay.style.left = xOffset + 'px';
+                container.appendChild(dotOverlay);
             }
 
             gleasonScoreRoot?.addEventListener('input', function(event) {
