@@ -172,47 +172,47 @@ export class AcmeSubmitButton extends HTMLElement {
                     none: {
                         url: baseUrl + "sparing_none.svg",
                         // Terrible solution, but not sure how to do it better
-                        positionRight: { width: '20%', left: '166px', top: '70px' },
-                        positionLeft: { width: '20%', left: '166px', top: '70px' },
+                        positionRight: { width: '20%', left: '230px', top: '70px' },
+                        positionLeft: { width: '20%', left: '-30px', top: '70px' },
                         // The coded text IDs
                         nameLeft: "at0014",
                         nameRight: "at0020",
                     },
                     semi: {
                         url: baseUrl + "sparing_semi.svg",
-                        positionRight: { width: '20%', left: '166px', top: '70px' },
-                        positionLeft: { width: '20%', left: '166px', top: '70px' },
+                        positionRight: { width: '20%', left: '210px', top: '70px' },
+                        positionLeft: { width: '20%', left: '-10px', top: '70px' },
                         nameLeft: "at0013",
                         nameRight: "at0019",
                     },
                     interLow: {
                         url: baseUrl + "sparing_inter.svg",
-                        positionRight: { width: '20%', left: '166px', top: '70px' },
-                        positionLeft: { width: '20%', left: '166px', top: '70px' },
+                        positionRight: { width: '20%', left: '190px', top: '70px' },
+                        positionLeft: { width: '20%', left: '10px', top: '70px' },
                         nameLeft: "at0012",
                         nameRight: "at0018"
                     },
-                    interHigh: {
-                        url: baseUrl + "sparing_inter.svg",
-                        positionRight: { width: '20%', left: '166px', top: '70px' },
-                        positionLeft: { width: '20%', left: '166px', top: '70px' },
-                        nameLeft: "at0011",
-                        nameRight: "at0017"
-                    },
+//                    interHigh: {
+//                        url: baseUrl + "sparing_inter.svg",
+//                        positionRight: { width: '20%', left: '166px', top: '70px' },
+//                        positionLeft: { width: '20%', left: '166px', top: '70px' },
+//                        nameLeft: "at0011",
+//                        nameRight: "at0017"
+//                    },
                     intraLow: {
                         url: baseUrl + "sparing_intra.svg",
                         positionRight: { width: '20%', left: '166px', top: '70px' },
-                        positionLeft: { width: '20%', left: '166px', top: '70px' },
+                        positionLeft: { width: '20%', left: '34px', top: '70px' },
                         nameLeft: "at0010",
                         nameRight: "at0016"
                     },
-                    intraHigh: {
-                        url: baseUrl + "sparing_intra.svg",
-                        positionRight: { width: '20%', left: '166px', top: '70px' },
-                        positionLeft: { width: '20%', left: '166px', top: '70px' },
-                        nameLeft: "at0009",
-                        nameRight: "at0015"
-                    }
+//                    intraHigh: {
+//                        url: baseUrl + "sparing_intra.svg",
+//                        positionRight: { width: '20%', left: '166px', top: '70px' },
+//                        positionLeft: { width: '20%', left: '166px', top: '70px' },
+//                        nameLeft: "at0009",
+//                        nameRight: "at0015"
+//                    }
                 };
 
                 for (const [key, info] of Object.entries(sparingInformation)) {
@@ -268,8 +268,8 @@ export class AcmeSubmitButton extends HTMLElement {
                 const dotOverlay = document.createElement('img');
                 dotOverlay.src = 'https://raw.githubusercontent.com/BaltzarL/cambio-test/refs/heads/main/images/dot_overlay.svg';
                 dotOverlay.className = 'overlay-image';
-                dotOverlay.width = "20px"
-                dotOverlay.height = "20px"
+                dotOverlay.style.width = "20px"
+                dotOverlay.style.height = "20px"
 
                 // Mirror image on the left
                 const isLeft = row === '1' || row === '2';
