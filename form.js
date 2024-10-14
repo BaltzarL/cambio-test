@@ -225,18 +225,18 @@ export class AcmeSubmitButton extends HTMLElement {
                     overlayRight.src = info.url;
                     overlayLeft.src = info.url;
                     //                    overlay.classList.add('overlay-image');
-                    overlayLeft.title = findOptionByValue(sparingDxRoot, info.name).text;
-                    overlayRight.title = findOptionByValue(sparingSinRoot, info.name).text;
+                    overlayLeft.title = findOptionByValue(sparingDxRoot, info.nameLeft).text;
+                    overlayRight.title = findOptionByValue(sparingSinRoot, info.nameRight).text;
 
                     // Set position
                     Object.assign(overlayRight.style, info.positionRight);
                     Object.assign(overlayLeft.style, info.positionLeft);
 
                     // Apply grayscale filter on all unselected images
-                    if (sparingDx != info.name) {
+                    if (sparingDx != info.nameLeft) {
                         Object.assign(overlayRight.style, grayscale);
                     }
-                    if (sparingSin != info.name){
+                    if (sparingSin != info.nameRight){
                         Object.assign(overlayLeft.style, grayscale);
                     }
                     // Reverse the left
