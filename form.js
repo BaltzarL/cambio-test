@@ -170,51 +170,67 @@ export class AcmeSubmitButton extends HTMLElement {
                 const sparingInformation = {
                     none: {
                         url: baseUrl + "sparing_none.svg",
-                        position: { width: '11%', left: '150px', top: '223px' },
+                        // Terrible solution, but not sure how to do it better
+                        positionRight: { width: '20%', left: '166px', top: '70px' },
+                        positionLeft: { width: '20%', left: '166px', top: '70px' },
                         name: "at0014"
                     },
                     semi: {
                         url: baseUrl + "sparing_semi.svg",
-                        position: { width: '11%', left: '150px', top: '223px' },
+                        positionRight: { width: '20%', left: '166px', top: '70px' },
+                        positionLeft: { width: '20%', left: '166px', top: '70px' },
                         name: "at0013"
                     },
                     interLow: {
                         url: baseUrl + "sparing_inter.svg",
-                        position: { width: '11%', left: '150px', top: '223px' },
+                        positionRight: { width: '20%', left: '166px', top: '70px' },
+                        positionLeft: { width: '20%', left: '166px', top: '70px' },
                         name: "at0012"
                     },
                     interHigh: {
                         url: baseUrl + "sparing_inter.svg",
-                        position: { width: '11%', left: '150px', top: '223px' },
+                        positionRight: { width: '20%', left: '166px', top: '70px' },
+                        positionLeft: { width: '20%', left: '166px', top: '70px' },
                         name: "at0011"
                     },
                     intraLow: {
                         url: baseUrl + "sparing_intra.svg",
-                        position: { width: '11%', left: '150px', top: '223px' },
+                        positionRight: { width: '20%', left: '166px', top: '70px' },
+                        positionLeft: { width: '20%', left: '166px', top: '70px' },
                         name: "at0010"
                     },
                     intraHigh: {
                         url: baseUrl + "sparing_intra.svg",
-                        position: { width: '11%', left: '150px', top: '223px' },
+                        positionRight: { width: '20%', left: '166px', top: '70px' },
+                        positionLeft: { width: '20%', left: '166px', top: '70px' },
                         name: "at0009"
                     }
                 };
 
                 for (const [key, info] of Object.entries(sparingInformation)) {
-                    const overlay = document.createElement('img');
-                    overlay.src = info.url;
-                    overlay.classList.add('overlay-image');
-                    overlay.title = findOptionByValue(sparingDxRoot, info.name).text;
+                    const overlayRight = document.createElement('img');
+                    const overlayLeft = document.createElement('img');
+                    overlayRight.src = info.url;
+                    overlayLeft.src = info.url;
+                    //                    overlay.classList.add('overlay-image');
+                    overlayRight.title = findOptionByValue(sparingDxRoot, info.name).text;
+                    overlayLeft.title = findOptionByValue(sparingSinRoot, info.name).text;
 
                     // Set position
-                    Object.assign(overlay.style, info.position);
+                    Object.assign(overlayRight.style, info.positionRight);
+                    Object.assign(overlayLeft.style, info.positionLeft);
 
                     // Apply grayscale filter on all unselected images
                     if (sparingDx != info.name) {
-                        Object.assign(overlay.style, grayscale);
+                        Object.assign(overlayRight.style, grayscale);
                     }
+                    if (sparingSin != info.name){
+                        Object.assign(overlayLeft.style, grayscale);
+                    }
+                    // Reverse the left
+                    overlayLeft.style.transform = 'scaleX(-1)'
 
-                    overlay.addEventListener("click", function() {
+                    overlayRight.addEventListener("click", function() {
                         console.log("Clicked on " + info.name);
                         if (sparingDxRoot) {
                             sparingDxRoot.value = info.name;
@@ -223,8 +239,18 @@ export class AcmeSubmitButton extends HTMLElement {
                         };
                     });
 
+                    overlayLeft.addEventListener("click", function() {
+                        console.log("Clicked on " + info.name);
+                        if (sparingSinRoot) {
+                            sparingSinRoot.value = info.name;
+                            prostateSparingSin = info.name;
+                            refreshOverlay();
+                        };
+                    });
+
                     // Append overlay to container
-                    containerA.appendChild(overlay);
+                    containerA.appendChild(overlayRight);
+                    containerA.appendChild(overlayLeft);
                 }
 
                 //textOverlay?.innerText = section;
