@@ -109,6 +109,7 @@ export class AcmeSubmitButton extends HTMLElement {
             var prostateSparingDx = "";
             var prostateSparingSin = "";
 
+            // These are to be replaced with the ids of the final inputs
             const gleasonScoreRoot = querySelector("c-input-count[name='T0_total_gleason_score']");
             const lesionLocationRoot = querySelector("c-input-select[name='T0_location']");
             const sparingDxRoot = querySelector("c-input-select[name='T0_nerve_sparing_dx']");
@@ -129,6 +130,8 @@ export class AcmeSubmitButton extends HTMLElement {
                     filter: 'brightness(0) saturate(100%) invert(47%) sepia(2%) saturate(812%) hue-rotate(212deg) brightness(98%) contrast(89%)'
                 }
 
+                // Get the row, section and column from the location
+                // E.g "1Cd" means row "1", section "C" and column "d"
                 const row = location[0];
                 const section = location[1];
                 const column = location[2];
@@ -167,43 +170,52 @@ export class AcmeSubmitButton extends HTMLElement {
                 }
 
 
+                // Dex = Left (on image)
+                // Sin = Right (on image)
                 const sparingInformation = {
                     none: {
                         url: baseUrl + "sparing_none.svg",
                         // Terrible solution, but not sure how to do it better
                         positionRight: { width: '20%', left: '166px', top: '70px' },
                         positionLeft: { width: '20%', left: '166px', top: '70px' },
-                        name: "at0014"
+                        // The coded text IDs
+                        nameLeft: "at0014",
+                        nameRight: "at0020",
                     },
                     semi: {
                         url: baseUrl + "sparing_semi.svg",
                         positionRight: { width: '20%', left: '166px', top: '70px' },
                         positionLeft: { width: '20%', left: '166px', top: '70px' },
-                        name: "at0013"
+                        nameLeft: "at0013",
+                        nameRight: "at0019",
                     },
                     interLow: {
                         url: baseUrl + "sparing_inter.svg",
                         positionRight: { width: '20%', left: '166px', top: '70px' },
                         positionLeft: { width: '20%', left: '166px', top: '70px' },
-                        name: "at0012"
+                        nameLeft: "at0012",
+                        nameRight: "at0018"
                     },
                     interHigh: {
                         url: baseUrl + "sparing_inter.svg",
                         positionRight: { width: '20%', left: '166px', top: '70px' },
                         positionLeft: { width: '20%', left: '166px', top: '70px' },
-                        name: "at0011"
+                        nameLeft: "at0011",
+                        nameRight: "at0017"
                     },
                     intraLow: {
                         url: baseUrl + "sparing_intra.svg",
                         positionRight: { width: '20%', left: '166px', top: '70px' },
                         positionLeft: { width: '20%', left: '166px', top: '70px' },
-                        name: "at0010"
+                        nameLeft: "at0010",
+                        nameRight: "at0016"
                     },
                     intraHigh: {
                         url: baseUrl + "sparing_intra.svg",
                         positionRight: { width: '20%', left: '166px', top: '70px' },
                         positionLeft: { width: '20%', left: '166px', top: '70px' },
-                        name: "at0009"
+                        nameLeft: "at0009",
+                        nameRight: "at0015"
                     }
                 };
 
@@ -213,8 +225,8 @@ export class AcmeSubmitButton extends HTMLElement {
                     overlayRight.src = info.url;
                     overlayLeft.src = info.url;
                     //                    overlay.classList.add('overlay-image');
-                    overlayRight.title = findOptionByValue(sparingDxRoot, info.name).text;
-                    overlayLeft.title = findOptionByValue(sparingSinRoot, info.name).text;
+                    overlayLeft.title = findOptionByValue(sparingDxRoot, info.name).text;
+                    overlayRight.title = findOptionByValue(sparingSinRoot, info.name).text;
 
                     // Set position
                     Object.assign(overlayRight.style, info.positionRight);
@@ -231,19 +243,19 @@ export class AcmeSubmitButton extends HTMLElement {
                     overlayLeft.style.transform = 'scaleX(-1)'
 
                     overlayRight.addEventListener("click", function() {
-                        console.log("Clicked on " + info.name);
-                        if (sparingDxRoot) {
-                            sparingDxRoot.value = info.name;
-                            prostateSparingDx = info.name;
+                        console.log("Clicked on " + info.nameRight);
+                        if (sparingSinRoot) {
+                            sparingSinRoot.value = info.nameRight;
+                            prostateSparingSin = info.nameRight;
                             refreshOverlay();
                         };
                     });
 
                     overlayLeft.addEventListener("click", function() {
-                        console.log("Clicked on " + info.name);
-                        if (sparingSinRoot) {
-                            sparingSinRoot.value = info.name;
-                            prostateSparingSin = info.name;
+                        console.log("Clicked on " + info.nameLeft);
+                        if (sparingDxRoot) {
+                            sparingDxRoot.value = info.nameLeft;
+                            prostateSparingDx = info.nameLeft;
                             refreshOverlay();
                         };
                     });
