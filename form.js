@@ -132,6 +132,7 @@ export class AcmeSubmitButton extends HTMLElement {
                 const section = location[1];
                 const column = location[2];
 
+                // This should be designed in some other way, hardcoded coordinates is not good
                 const locationInformation = {
                     '1': {
                         xOffsetA: 30,
@@ -162,6 +163,15 @@ export class AcmeSubmitButton extends HTMLElement {
                         yOffsetD: 95
                     }
                 };
+                // Extra harcoded locations because the above system is not 100% accurate
+                const extraLocations = {
+                    '1Av': {
+                        xOffset: 20,
+                    },
+                    '4Av': {
+                        xOffset: 160,
+                    },
+                }
 
                 const locationCoordinates = locationInformation[row];
                 if (!locationCoordinates) return;
@@ -184,6 +194,13 @@ export class AcmeSubmitButton extends HTMLElement {
                 } else if (section === 'C') {
                     xOffset = locationCoordinates.xOffsetC;
                     container = containerC;
+                }
+
+                // Override the location
+                const extraLocation = extraLocations[location];
+                if (extraLocation) {
+                    xOffset = (extraLocation.xOffset ?? xOffset);
+                    yOffset = (extraLocation.yOffset ?? yOffset);
                 }
 
                 const dotOverlay = document.createElement('img');
