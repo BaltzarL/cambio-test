@@ -241,23 +241,23 @@ export class AcmeSubmitButton extends HTMLElement {
                     none: {
                         url: baseUrl + "sparing_none.svg",
                         // Terrible solution, but not sure how to do it better
-                        positionRight: { width: '30%', left: '208px', top: '60px' },
-                        positionLeft: { width: '30%', left: '-62px', top: '60px' },
+                        positionRight: { width: '30%', left: '212px', top: '60px' },
+                        positionLeft: { width: '30%', left: '-66px', top: '60px' },
                         // The coded text IDs
                         nameLeft: "at0014",
                         nameRight: "at0020",
                     },
                     semi: {
                         url: baseUrl + "sparing_semi.svg",
-                        positionRight: { width: '20%', left: '196px', top: '70px' },
-                        positionLeft: { width: '20%', left: '-30px', top: '70px' },
+                        positionRight: { width: '20%', left: '200px', top: '70px' },
+                        positionLeft: { width: '20%', left: '-34px', top: '70px' },
                         nameLeft: "at0013",
                         nameRight: "at0019",
                     },
                     inter: {
                         url: baseUrl + "sparing_inter.svg",
-                        positionRight: { width: '20%', left: '180px', top: '70px' },
-                        positionLeft: { width: '20%', left: '-14px', top: '70px' },
+                        positionRight: { width: '20%', left: '184px', top: '70px' },
+                        positionLeft: { width: '20%', left: '-18px', top: '70px' },
                         nameLeft: "at0012",
                         nameRight: "at0018",
                         // Extra buttons for clicking in the top part of the element
