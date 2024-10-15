@@ -132,30 +132,57 @@ export class AcmeSubmitButton extends HTMLElement {
                 const section = location[1];
                 const column = location[2];
 
-                var xOffset = 0;
-                if (row === '1') {
-                    xOffset = 40;
-                } else if (row === '2') {
-                    xOffset = 70;
-                } else if (row === '3') {
-                    xOffset = 120;
-                } else if (row === '4') {
-                    xOffset = 150;
-                }
+                const locationInformation = {
+                    '1': {
+                        xOffsetA: 30,
+                        xOffsetB: 40,
+                        xOffsetC: 50,
+                        yOffsetV: 70,
+                        yOffsetD: 95
+                    },
+                    '2': {
+                        xOffsetA: 70,
+                        xOffsetB: 70,
+                        xOffsetC: 70,
+                        yOffsetV: 70,
+                        yOffsetD: 95
+                    },
+                    '3': {
+                        xOffsetA: 115,
+                        xOffsetB: 115,
+                        xOffsetC: 115,
+                        yOffsetV: 70,
+                        yOffsetD: 95
+                    },
+                    '4': {
+                        xOffsetA: 150,
+                        xOffsetB: 150,
+                        xOffsetC: 150,
+                        yOffsetV: 70,
+                        yOffsetD: 95
+                    }
+                };
 
+                const locationCoordinates = locationInformation[row];
+                if (!locationCoordinates) return;
+
+                var xOffset = 0;
                 var yOffset = 0;
                 if (column === 'v') {
-                    yOffset = 65;
+                    yOffset = locationCoordinates.yOffsetV;
                 } else if (column === 'd') {
-                    yOffset = 100;
+                    yOffset = locationCoordinates.yOffsetD;
                 }
 
                 var container = containerA
                 if (section === 'A') {
+                    xOffset = locationCoordinates.xOffsetA;
                     container = containerA;
                 } else if (section === 'B') {
+                    xOffset = locationCoordinates.xOffsetB;
                     container = containerB;
                 } else if (section === 'C') {
+                    xOffset = locationCoordinates.xOffsetC;
                     container = containerC;
                 }
 
