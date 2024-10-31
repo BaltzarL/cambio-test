@@ -107,7 +107,7 @@ export class AcmeSubmitButton extends HTMLElement {
         // Wait until the DOM is ready
         setTimeout(() => {
             var gleasonScore = 0;
-            var lesionLocationText = "";
+            var lesionLocationText = "1Ad";
             var prostateSparingDx = "";
             var prostateSparingSin = "";
 
@@ -127,102 +127,66 @@ export class AcmeSubmitButton extends HTMLElement {
                 if (!location) return;
 
                 // Get the row, section and column from the location
-                // E.g "1Cd" means row "1", section "C" and column "d"
-                const row = location[0];
+                // E.g "1Cd" means column "1", section "C" and row "d"
+                const column = location[0];
                 const section = location[1];
-                const column = location[2];
-
-                // This should be designed in some other way, hardcoded coordinates is not good
-                const locationInformation = {
-                    '1': {
-                        xOffsetA: 30,
-                        xOffsetB: 40,
-                        xOffsetC: 50,
-                        yOffsetV: 70,
-                        yOffsetD: 95
-                    },
-                    '2': {
-                        xOffsetA: 70,
-                        xOffsetB: 70,
-                        xOffsetC: 70,
-                        yOffsetV: 70,
-                        yOffsetD: 95
-                    },
-                    '3': {
-                        xOffsetA: 115,
-                        xOffsetB: 115,
-                        xOffsetC: 115,
-                        yOffsetV: 70,
-                        yOffsetD: 95
-                    },
-                    '4': {
-                        xOffsetA: 150,
-                        xOffsetB: 150,
-                        xOffsetC: 150,
-                        yOffsetV: 70,
-                        yOffsetD: 95
-                    }
-                };
-                // Extra harcoded locations because the above system is not 100% accurate
-                const extraLocations = {
-                    '1Av': {
-                        xOffset: 20,
-                    },
-                    '4Av': {
-                        xOffset: 160,
-                    },
-                }
-
-                const locationCoordinates = locationInformation[row];
-                if (!locationCoordinates) return;
-
-                var xOffset = 0;
-                var yOffset = 0;
-                if (column === 'v') {
-                    yOffset = locationCoordinates.yOffsetV;
-                } else if (column === 'd') {
-                    yOffset = locationCoordinates.yOffsetD;
-                }
+                const row = location[2];
 
                 var container = containerA
                 if (section === 'A') {
-                    xOffset = locationCoordinates.xOffsetA;
                     container = containerA;
                 } else if (section === 'B') {
-                    xOffset = locationCoordinates.xOffsetB;
                     container = containerB;
                 } else if (section === 'C') {
-                    xOffset = locationCoordinates.xOffsetC;
                     container = containerC;
                 }
 
-                // Override the location
-                const extraLocation = extraLocations[location];
-                if (extraLocation) {
-                    xOffset = (extraLocation.xOffset ?? xOffset);
-                    yOffset = (extraLocation.yOffset ?? yOffset);
+                // Test using either of these:
+                // polygon(x% y%, 100% 100%, 0% 100%)
+                // polygon(x% y%, 0% 0%, 100% 0%)
+                const lesionCoordinates = {
+                    A: {
+                        // All corners of the squares starting from top left and goes to right
+                        // Expressed in percentages of x and y
+                        top:    [ [ 11, 50 ], [ 16, 41 ], [ 50, 29 ], [ 83, 38 ], [ 90, 45 ] ],
+                        middle: [ [ 9, 63 ], [ 22, 60 ], [ 51, 60 ], [ 79, 61 ], [ 93, 63 ] ],
+                        bottom: [ [ 14, 86 ], [ 30, 92 ], [ 51, 94 ], [ 72, 93 ], [ 88, 85 ] ]
+                    },
+                    B: { // Placeholder
+                        top:    [ [ 11, 50 ], [ 16, 41 ], [ 50, 29 ], [ 83, 38 ], [ 90, 45 ] ],
+                        middle: [ [ 10, 63 ], [ 22, 60 ], [ 51, 60 ], [ 79, 61 ], [ 93, 63 ] ],
+                        bottom: [ [ 16, 88 ], [ 30, 92 ], [ 51, 94 ], [ 72, 93 ], [ 88, 85 ] ]
+                    },
+                    C: { // Placeholder
+                        top:    [ [ 11, 50 ], [ 16, 41 ], [ 50, 29 ], [ 83, 38 ], [ 90, 45 ] ],
+                        middle: [ [ 10, 63 ], [ 22, 60 ], [ 51, 60 ], [ 79, 61 ], [ 93, 63 ] ],
+                        bottom: [ [ 16, 88 ], [ 30, 92 ], [ 51, 94 ], [ 72, 93 ], [ 88, 85 ] ]
+                    },
+                };
+
+                function createOverlayShape(pointsArray, color = 'rgba(255, 0, 0, 0.5)') {
+                    // Create a new overlay div
+                    const newOverlay = document.createElement('div');
+                    newOverlay.classList.add('overlay-image');
+                    newOverlay.style.backgroundColor = color;
+                    newOverlay.style.width = "100%";
+                    newOverlay.style.height = "100%";
+
+                    // Convert pointsArray to a string formatted for clip-path
+                    const pointsString = pointsArray.map(point => `${point[0]}% ${point[1]}%`).join(', ');
+                    newOverlay.style.clipPath = `polygon(${pointsString})`;
+
+                    // Insert the overlay at the top
+                    container.insertBefore(newOverlay, container.firstChild);
                 }
 
-                const dotOverlay = document.createElement('img');
-                dotOverlay.src = 'https://raw.githubusercontent.com/BaltzarL/cambio-test/refs/heads/main/images/dot_overlay.svg';
-                dotOverlay.className = 'overlay-image';
-                dotOverlay.style.width = "20px"
-                dotOverlay.style.height = "20px"
-
-                // Mirror image on the left
-                const isLeft = row === '1' || row === '2';
-                if (isLeft) {
-                    dotOverlay.style.transform = 'scaleX(-1)'
-                }
-                dotOverlay.title = location;
-
-                // Calculate brightness based on Gleason score (from 2 to 10)
-                //                const brightness = 0.3 + ((score ?? 0) - 2) * 0.1; // 0.3 for Gleason score 2, 1.0 for score 10
-                //                dotOverlay.style.filter = `brightness(${brightness})`;
-
-                dotOverlay.style.top = yOffset + 'px';
-                dotOverlay.style.left = xOffset + 'px';
-                container.appendChild(dotOverlay);
+                console.log([section,row,column ]);
+                const coordinates = lesionCoordinates[section];
+                const topPoints =  row === 'v' ? coordinates.top : coordinates.middle;
+                const bottomPoints =  row === 'v' ? coordinates.middle : coordinates.bottom;
+                const columnIndex = parseInt(column) - 1;
+                const selectedCoordinates = [ topPoints[columnIndex], topPoints[columnIndex + 1], bottomPoints[columnIndex + 1], bottomPoints[columnIndex] ];
+                createOverlayShape(selectedCoordinates)
             }
 
             function refreshOverlay() {
