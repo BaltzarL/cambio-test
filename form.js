@@ -41,6 +41,24 @@ export class AcmeSubmitButton extends HTMLElement {
         prostateC.alt = 'Base Image';
         prostateC.style.width = '200px';
 
+        function percentageListener(event) {
+            const image = event.target; // The image that was clicked
+            const rect = image.getBoundingClientRect();
+            const x = event.clientX - rect.left; // X position relative to image
+            const y = event.clientY - rect.top;  // Y position relative to image
+
+            // Calculate percentages
+            const xPercent = ((x / rect.width) * 100).toFixed(0);
+            const yPercent = ((y / rect.height) * 100).toFixed(0);
+
+            // Display or log coordinates
+            console.log(`X: ${xPercent}%, Y: ${yPercent}% for ${image.id}`);
+        }
+
+//        prostateA.addEventListener("click", percentageListener);
+//        prostateB.addEventListener("click", percentageListener);
+//        prostateC.addEventListener("click", percentageListener);
+
         // Append the base image to the container
         containerA.appendChild(prostateA);
         containerB.appendChild(prostateB);
@@ -152,15 +170,15 @@ export class AcmeSubmitButton extends HTMLElement {
                         middle: [ [ 9, 63 ], [ 22, 60 ], [ 51, 60 ], [ 79, 61 ], [ 93, 63 ] ],
                         bottom: [ [ 14, 86 ], [ 30, 92 ], [ 51, 94 ], [ 72, 93 ], [ 88, 85 ] ]
                     },
-                    B: { // Placeholder
-                        top:    [ [ 11, 50 ], [ 16, 41 ], [ 50, 29 ], [ 83, 38 ], [ 90, 45 ] ],
-                        middle: [ [ 10, 63 ], [ 22, 60 ], [ 51, 60 ], [ 79, 61 ], [ 93, 63 ] ],
-                        bottom: [ [ 16, 88 ], [ 30, 92 ], [ 51, 94 ], [ 72, 93 ], [ 88, 85 ] ]
+                    B: {
+                        top:    [ [ 20, 56 ], [ 26, 46 ], [ 51, 29 ], [ 77, 41 ], [ 83, 53 ] ],
+                        middle: [ [ 21, 62 ], [ 30, 60 ], [ 52, 58 ], [ 75, 61 ], [ 85, 61 ] ],
+                        bottom: [ [ 21, 74 ], [ 35, 90 ], [ 53, 95 ], [ 70, 93 ], [ 82, 81 ] ]
                     },
-                    C: { // Placeholder
-                        top:    [ [ 11, 50 ], [ 16, 41 ], [ 50, 29 ], [ 83, 38 ], [ 90, 45 ] ],
-                        middle: [ [ 10, 63 ], [ 22, 60 ], [ 51, 60 ], [ 79, 61 ], [ 93, 63 ] ],
-                        bottom: [ [ 16, 88 ], [ 30, 92 ], [ 51, 94 ], [ 72, 93 ], [ 88, 85 ] ]
+                    C: {
+                        top:    [ [ 28, 51 ], [ 37, 41 ], [ 56, 33 ], [ 75, 41 ], [ 85, 50 ] ],
+                        middle: [ [ 26, 62 ], [ 41, 57 ], [ 56, 57 ], [ 73, 58 ], [ 89, 63 ] ],
+                        bottom: [ [ 39, 94 ], [ 47, 91 ], [ 57, 88 ], [ 68, 91 ], [ 76, 93 ] ]
                     },
                 };
 
