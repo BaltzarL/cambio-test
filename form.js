@@ -117,6 +117,7 @@ export class AcmeSubmitButton extends HTMLElement {
                         refreshOverlay();
                     });
                 });
+                refreshOverlay();
             });
 
             // Start observing for changes
@@ -267,7 +268,7 @@ export class AcmeSubmitButton extends HTMLElement {
 
             function refreshOverlay() {
                 querySelectorAll(rootContainer, '.overlay-image').forEach(overlay => overlay.remove());
-                const allLocations = lesionLocationRoots.map(root => root.text);
+                const allLocations = [...new Set(lesionLocationRoots.map(root => root.text))]; // All unique positions
                 updateSparingOverlay(prostateSparingDx, prostateSparingSin);
                 allLocations.forEach(location => updateLocationOverlay(location, gleasonScore));
             }
