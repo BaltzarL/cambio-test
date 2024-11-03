@@ -100,7 +100,7 @@ export class AcmeSubmitButton extends HTMLElement {
 
             // MutationObserver to update lesionLocationRoots dynamically
             const observer = new MutationObserver(mutations => {
-                lesionLocationRoots = querySelectorAll(lesionLocationInstance, "c-instantiator-instance");
+                lesionLocationRoots = querySelectorAll(lesionLocationInstance, "c-input-select");
                 lesionLocationRoots.forEach(locationElement => {
                     locationElement.addEventListener('input', event => {
                         refreshOverlay();
@@ -136,7 +136,8 @@ export class AcmeSubmitButton extends HTMLElement {
                 container.insertBefore(newOverlay, container.firstChild);
             }
 
-            function updateOverlay(location, score, sparingDx, sparingSin) {
+            function updateLocationOverlay(location, score) {
+                if (!location) return;
                 const section = location[1];
                 const row = location[2];
                 const column = parseInt(location[0]) - 1;
@@ -148,7 +149,9 @@ export class AcmeSubmitButton extends HTMLElement {
                 const selectedCoordinates = [topPoints[column], topPoints[column + 1], bottomPoints[column + 1], bottomPoints[column]];
 
                 createOverlayShape(selectedCoordinates, container);
+            }
 
+            function updateSparingOverlay(sparingDx, sparingSin) {
                 // Dex = Left (on image)
                 // Sin = Right (on image)
                 const sparingInformation = {
@@ -190,23 +193,72 @@ export class AcmeSubmitButton extends HTMLElement {
                     },
                 };
 
-                for (const info of Object.values(sparingInfo)) {
+                for (const [key, info] of Object.entries(sparingInformation)) {
                     const overlayRight = document.createElement('img');
                     const overlayLeft = document.createElement('img');
-                    overlayRight.className = overlayLeft.className = 'overlay-image';
-                    overlayRight.src = overlayLeft.src = info.url;
-                    overlayRight.style = { ...info.positionRight, filter: sparingSin !== info.url ? grayscale.filter : 'none' };
-                    overlayLeft.style = { ...info.positionLeft, filter: sparingDx !== info.url ? grayscale.filter : 'none', transform: 'scaleX(-1)' };
+                    overlayRight.className = 'overlay-image';
+                    overlayLeft.className = 'overlay-image';
+                    overlayRight.src = info.url;
+                    overlayLeft.src = info.url;
+                    //                    overlay.classList.add('overlay-image');
+                    overlayLeft.title = findOptionByValue(sparingDxRoot, info.nameLeft).text;
+                    overlayRight.title = findOptionByValue(sparingSinRoot, info.nameRight).text;
 
-                    container.appendChild(overlayRight);
-                    container.appendChild(overlayLeft);
+                    // Set position
+                    Object.assign(overlayRight.style, info.positionRight);
+                    Object.assign(overlayLeft.style, info.positionLeft);
+
+                    // Apply grayscale filter on all unselected images
+                    if (sparingDx != info.nameLeft && sparingDx != info.nameLeftTop) {
+                        Object.assign(overlayLeft.style, grayscale);
+                    }
+                    if (sparingSin != info.nameRight && sparingSin != info.nameRightTop){
+                        Object.assign(overlayRight.style, grayscale);
+                    }
+                    // Reverse the left
+                    overlayLeft.style.transform = 'scaleX(-1)'
+
+                    overlayRight.addEventListener("click", function(event) {
+                        const overlayHeight = overlayRight.clientHeight; // Get the height of overlayLeft
+                        const clickY = event.clientY - overlayRight.getBoundingClientRect().top; // Get the Y coordinate relative to overlayLeft
+                        const clickTop = clickY < overlayHeight / 2;
+
+                        const selectedName = clickTop ? (info.nameRightTop ?? info.nameRight) : info.nameRight;
+
+                        console.log("Clicked on " + selectedName + ", Clicked top: " + clickTop);
+                        if (sparingSinRoot) {
+                            sparingSinRoot.value = selectedName;
+                            prostateSparingSin = selectedName;
+                            refreshOverlay();
+                        };
+                    });
+
+                    overlayLeft.addEventListener("click", function(event) {
+                        const overlayHeight = overlayLeft.clientHeight; // Get the height of overlayLeft
+                        const clickY = event.clientY - overlayLeft.getBoundingClientRect().top; // Get the Y coordinate relative to overlayLeft
+                        const clickTop = clickY < overlayHeight / 2;
+
+                        const selectedName = clickTop ? (info.nameLeftTop ?? info.nameLeft) : info.nameLeft;
+
+                        console.log("Clicked on " + selectedName + ", Clicked top: " + clickTop);
+                        if (sparingDxRoot) {
+                            sparingDxRoot.value = selectedName;
+                            prostateSparingDx = selectedName;
+                            refreshOverlay();
+                        };
+                    });
+
+                    // Append overlay to container
+                    containerA.appendChild(overlayRight);
+                    containerA.appendChild(overlayLeft);
                 }
             }
 
             function refreshOverlay() {
                 querySelectorAll(rootContainer, '.overlay-image').forEach(overlay => overlay.remove());
                 const allLocations = lesionLocationRoots.map(root => root.text);
-                allLocations.forEach(location => updateOverlay(location, gleasonScore, prostateSparingDx, prostateSparingSin));
+                updateSparingOverlay(prostateSparingDx, prostateSparingSin);
+                allLocations.forEach(location => updateLocationOverlay(location, gleasonScore));
             }
 
             gleasonScoreRoot?.addEventListener('input', event => {
