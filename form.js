@@ -92,12 +92,12 @@ export class AcmeSubmitButton extends HTMLElement {
             let prostateSparingDx = "";
             let prostateSparingSin = "";
 
-            const gleasonScoreRoot = this.querySelectorAll("c-input-count[name='T0_total_gleason_score']");
-            const sparingDxRoot = this.querySelectorAll("c-input-select[name='T0_nerve_sparing_dx']");
-            const sparingSinRoot = this.querySelectorAll("c-input-select[name='T0_nerve_sparing_sin']");
+            const gleasonScoreRoot = querySelector("c-input-count[name='T0_total_gleason_score']");
+            const sparingDxRoot = querySelector("c-input-select[name='T0_nerve_sparing_dx']");
+            const sparingSinRoot = querySelector("c-input-select[name='T0_nerve_sparing_sin']");
 
             let lesionLocationRoots = [];
-            const lesionLocationInstance = this.querySelectorAll("c-instantiator-instance[name='T0_location_EL']");
+            const lesionLocationInstance = querySelector("c-instantiator-instance[name='T0_location_EL']");
 
             // MutationObserver to update lesionLocationRoots dynamically
             const observer = new MutationObserver(mutations => {
@@ -207,7 +207,7 @@ export class AcmeSubmitButton extends HTMLElement {
 
             function refreshOverlay() {
                 const allLocations = lesionLocationRoots.map(root => root.value).filter(Boolean);
-                shadowRoot.querySelectorAll('.overlay-image').forEach(overlay => overlay.remove());
+                querySelectorAll('.overlay-image').forEach(overlay => overlay.remove());
                 allLocations.forEach(location => updateOverlay(location, gleasonScore, prostateSparingDx, prostateSparingSin));
             }
 
