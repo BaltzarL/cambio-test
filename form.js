@@ -97,7 +97,7 @@ export class AcmeSubmitButton extends HTMLElement {
             const sparingSinRoot = querySelector("c-input-select[name='T0_nerve_sparing_sin']");
 
             let lesionLocationRoots = [];
-            const lesionLocationInstance = querySelector("c-instantiator-instance[name='T0_location_EL']");
+            const lesionLocationInstance = querySelector("c-instantiator[name='T0_location_EL']");
 
             // MutationObserver to update lesionLocationRoots dynamically
             const observer = new MutationObserver(mutations => {
