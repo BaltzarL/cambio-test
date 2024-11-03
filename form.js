@@ -62,18 +62,42 @@ export class AcmeSubmitButton extends HTMLElement {
         `;
         shadowRoot.appendChild(style);
 
+        // Utility functions for querying elements in the shadow DOM
+        function querySelector(selector) {
+            return querySelectorAll(document, selector)[0];
+        }
+
+        function querySelectorAll(node, selector) {
+            const nodes = [...node.querySelectorAll(selector)];
+            const nodeIterator = document.createNodeIterator(
+                node,
+                NodeFilter.SHOW_ELEMENT,
+                node => node instanceof Element && node.shadowRoot ?
+                NodeFilter.FILTER_ACCEPT :
+                NodeFilter.FILTER_REJECT,
+            );
+
+            let currentNode = nodeIterator.nextNode();
+            while (currentNode) {
+                nodes.push(...querySelectorAll(currentNode.shadowRoot, selector));
+                currentNode = nodeIterator.nextNode();
+            }
+
+            return nodes;
+        }
+
         setTimeout(() => {
             let gleasonScore = 0;
             let lesionLocationText = "";
             let prostateSparingDx = "";
             let prostateSparingSin = "";
 
-            const gleasonScoreRoot = this.querySelectorInShadow("c-input-count[name='T0_total_gleason_score']");
-            const sparingDxRoot = this.querySelectorInShadow("c-input-select[name='T0_nerve_sparing_dx']");
-            const sparingSinRoot = this.querySelectorInShadow("c-input-select[name='T0_nerve_sparing_sin']");
+            const gleasonScoreRoot = this.querySelectorAll("c-input-count[name='T0_total_gleason_score']");
+            const sparingDxRoot = this.querySelectorAll("c-input-select[name='T0_nerve_sparing_dx']");
+            const sparingSinRoot = this.querySelectorAll("c-input-select[name='T0_nerve_sparing_sin']");
 
             let lesionLocationRoots = [];
-            const lesionLocationInstance = this.querySelectorInShadow("c-instantiator-instance[name='T0_location_EL']");
+            const lesionLocationInstance = this.querySelectorAll("c-instantiator-instance[name='T0_location_EL']");
 
             // MutationObserver to update lesionLocationRoots dynamically
             const observer = new MutationObserver(mutations => {
@@ -204,10 +228,6 @@ export class AcmeSubmitButton extends HTMLElement {
 
             refreshOverlay();
         });
-    }
-
-    querySelectorInShadow(selector) {
-        return this.shadowRoot.querySelector(selector);
     }
 }
 
