@@ -207,7 +207,7 @@ export class AcmeSubmitButton extends HTMLElement {
 
             function refreshOverlay() {
                 querySelectorAll(rootContainer, '.overlay-image').forEach(overlay => overlay.remove());
-                const allLocations = lesionLocationRoots.map(root => root.value).filter(Boolean);
+                const allLocations = lesionLocationRoots.map(root => root.text).filter(Boolean);
                 allLocations.forEach(location => updateOverlay(location, gleasonScore, prostateSparingDx, prostateSparingSin));
             }
 
