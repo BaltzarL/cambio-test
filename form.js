@@ -62,6 +62,17 @@ export class AcmeSubmitButton extends HTMLElement {
         `;
         shadowRoot.appendChild(style);
 
+        function findOptionByValue(selectElement, valueToFind) {
+            let foundOption = null;
+
+            Array.from(selectElement.options).forEach(option => {
+                if (option.value === valueToFind) {
+                    foundOption = option;
+                }
+            });
+            return foundOption;
+        }
+
         // Utility functions for querying elements in the shadow DOM
         function querySelector(selector) {
             return querySelectorAll(document, selector)[0];
