@@ -88,7 +88,6 @@ export class AcmeSubmitButton extends HTMLElement {
 
         setTimeout(() => {
             let gleasonScore = 0;
-            let lesionLocationText = "";
             let prostateSparingDx = "";
             let prostateSparingSin = "";
 
@@ -101,10 +100,9 @@ export class AcmeSubmitButton extends HTMLElement {
 
             // MutationObserver to update lesionLocationRoots dynamically
             const observer = new MutationObserver(mutations => {
-                lesionLocationRoots = Array.from(lesionLocationInstance.children);
+                lesionLocationRoots = querySelectorAll(lesionLocationInstance, "c-instantiator-instance");
                 lesionLocationRoots.forEach(locationElement => {
                     locationElement.addEventListener('input', event => {
-                        lesionLocationText = event.target.value;
                         refreshOverlay();
                     });
                 });
@@ -207,7 +205,7 @@ export class AcmeSubmitButton extends HTMLElement {
 
             function refreshOverlay() {
                 querySelectorAll(rootContainer, '.overlay-image').forEach(overlay => overlay.remove());
-                const allLocations = lesionLocationRoots.map(root => root.text).filter(Boolean);
+                const allLocations = lesionLocationRoots.map(root => root.text);
                 allLocations.forEach(location => updateOverlay(location, gleasonScore, prostateSparingDx, prostateSparingSin));
             }
 
