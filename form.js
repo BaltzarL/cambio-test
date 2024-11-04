@@ -97,17 +97,12 @@ export class AcmeSubmitButton extends HTMLElement {
             return nodes;
         }
 
-        setTimeout(() => {
-            let gleasonScore = 0;
-            let prostateSparingDx = "";
-            let prostateSparingSin = "";
-
-            const gleasonScoreRoot = querySelector("c-input-count[name='T0_total_gleason_score']");
-            const sparingDxRoot = querySelector("c-input-select[name='T0_nerve_sparing_dx']");
-            const sparingSinRoot = querySelector("c-input-select[name='T0_nerve_sparing_sin']");
-
+        function setupLesion(locationSelector, gleasonScoreSelector) {
             let lesionLocationRoots = [];
-            const lesionLocationInstance = querySelector("c-instantiator[name='T0_location_EL']");
+            let gleasonScore = [];
+
+            const gleasonScoreRoot = querySelector(gleasonScoreSelector);
+            const lesionLocationInstance = querySelector(locationSelector);
 
             // MutationObserver to update lesionLocationRoots dynamically
             const observer = new MutationObserver(mutations => {
@@ -123,8 +118,30 @@ export class AcmeSubmitButton extends HTMLElement {
             // Start observing for changes
             if (lesionLocationInstance) {
                 observer.observe(lesionLocationInstance, { childList: true });
-                lesionLocationRoots = Array.from(lesionLocationInstance.children);
+                lesionLocationRoots = querySelectorAll(lesionLocationInstance, "c-input-select");
             }
+
+            gleasonScoreRoot?.addEventListener('input', event => {
+                gleasonScore = event.target.value;
+                refreshOverlay();
+            });
+        }
+
+        setTimeout(() => {
+            let prostateSparingDx = "";
+            let prostateSparingSin = "";
+            let lesionInfo = [
+                { locations: [], gleasonScore: 0 },
+                { locations: [], gleasonScore: 0 },
+                { locations: [], gleasonScore: 0 },
+            ];
+
+            setupLesion("c-instantiator[name='T0_location_EL']", "c-input-count[name='T0_total_gleason_score']", lesionInfo[0]);
+            setupLesion("c-instantiator[name='T0_location_1_EL']", "c-input-count[name='T0_total_gleason_score_1']", lesionInfo[1]);
+            setupLesion("c-instantiator[name='T0_location_2_EL']", "c-input-count[name='T0_total_gleason_score_2']", lesionInfo[2]);
+
+            const sparingDxRoot = querySelector("c-input-select[name='T0_nerve_sparing_dx']");
+            const sparingSinRoot = querySelector("c-input-select[name='T0_nerve_sparing_sin']");
 
             const baseUrl = "https://raw.githubusercontent.com/BaltzarL/cambio-test/refs/heads/main/images/";
 
@@ -138,7 +155,7 @@ export class AcmeSubmitButton extends HTMLElement {
                 C: { top: [[28, 51], [37, 41], [56, 33], [75, 41], [85, 50]], middle: [[26, 62], [41, 57], [56, 57], [73, 58], [89, 63]], bottom: [[39, 94], [47, 91], [57, 88], [68, 91], [76, 93]] },
             };
 
-            function createOverlayShape(pointsArray, container, color = 'rgba(255, 0, 0, 0.5)') {
+            function createOverlayShape(pointsArray, container, color) {
                 const newOverlay = document.createElement('div');
                 newOverlay.classList.add('overlay-image');
                 newOverlay.style.backgroundColor = color;
@@ -146,6 +163,28 @@ export class AcmeSubmitButton extends HTMLElement {
                 newOverlay.style.height = "100%";
                 newOverlay.style.clipPath = `polygon(${pointsArray.map(point => `${point[0]}% ${point[1]}%`).join(', ')})`;
                 container.insertBefore(newOverlay, container.firstChild);
+            }
+
+
+            function getGleasonColor(value) {
+                // Ensure the value is within the range [0, 8]
+                value = Math.min(Math.max(value, 0), 8);
+
+                // Define the RGBA values for yellow and dark red
+                const yellow = { r: 255, g: 255, b: 0, a: 0.5 };
+                const darkRed = { r: 139, g: 0, b: 0, a: 0.5 };
+
+                // Calculate interpolation factor (from 0 to 1)
+                const t = value / 8;
+
+                // Interpolate each channel separately
+                const r = Math.round(yellow.r + (darkRed.r - yellow.r) * t);
+                const g = Math.round(yellow.g + (darkRed.g - yellow.g) * t);
+                const b = Math.round(yellow.b + (darkRed.b - yellow.b) * t);
+                const a = yellow.a + (darkRed.a - yellow.a) * t;
+
+                // Return the result as an rgba string
+                return `rgba(${r}, ${g}, ${b}, ${a})`;
             }
 
             function updateLocationOverlay(location, score) {
@@ -160,7 +199,9 @@ export class AcmeSubmitButton extends HTMLElement {
                 const bottomPoints = row === 'v' ? coordinates.middle : coordinates.bottom;
                 const selectedCoordinates = [topPoints[column], topPoints[column + 1], bottomPoints[column + 1], bottomPoints[column]];
 
-                createOverlayShape(selectedCoordinates, container);
+                const color = getGleasonColor(score);
+
+                createOverlayShape(selectedCoordinates, container, color);
             }
 
             function updateSparingOverlay(sparingDx, sparingSin) {
@@ -268,15 +309,12 @@ export class AcmeSubmitButton extends HTMLElement {
 
             function refreshOverlay() {
                 querySelectorAll(rootContainer, '.overlay-image').forEach(overlay => overlay.remove());
-                const allLocations = [...new Set(lesionLocationRoots.map(root => root.text))]; // All unique positions
                 updateSparingOverlay(prostateSparingDx, prostateSparingSin);
-                allLocations.forEach(location => updateLocationOverlay(location, gleasonScore));
+                lesionInfo.forEach(lesionInfo => {
+                    const allLocations = [...new Set(lesionInfo.locations.map(root => root.text))]; // All unique positions
+                    allLocations.forEach(location => updateLocationOverlay(location, lesionInfo.gleasonScore));
+                });
             }
-
-            gleasonScoreRoot?.addEventListener('input', event => {
-                gleasonScore = event.target.value;
-                refreshOverlay();
-            });
 
             sparingSinRoot?.addEventListener('input', event => {
                 prostateSparingSin = event.target.value;
