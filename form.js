@@ -99,17 +99,14 @@ export class AcmeSubmitButton extends HTMLElement {
 
 
         setTimeout(() => {
-            function setupLesion(locationSelector, gleasonScoreSelector) {
-                let lesionLocationRoots = [];
-                let gleasonScore = [];
-
+            function setupLesion(locationSelector, gleasonScoreSelector, lesionInfo) {
                 const gleasonScoreRoot = querySelector(gleasonScoreSelector);
                 const lesionLocationInstance = querySelector(locationSelector);
 
                 // MutationObserver to update lesionLocationRoots dynamically
                 const observer = new MutationObserver(mutations => {
-                    lesionLocationRoots = querySelectorAll(lesionLocationInstance, "c-input-select");
-                    lesionLocationRoots.forEach(locationElement => {
+                    lesionInfo.locations = querySelectorAll(lesionLocationInstance, "c-input-select");
+                    lesionInfo.locations.forEach(locationElement => {
                         locationElement.addEventListener('input', event => {
                             refreshOverlay();
                         });
@@ -120,11 +117,11 @@ export class AcmeSubmitButton extends HTMLElement {
                 // Start observing for changes
                 if (lesionLocationInstance) {
                     observer.observe(lesionLocationInstance, { childList: true });
-                    lesionLocationRoots = querySelectorAll(lesionLocationInstance, "c-input-select");
+                    lesionInfo.locations = querySelectorAll(lesionLocationInstance, "c-input-select");
                 }
 
                 gleasonScoreRoot?.addEventListener('input', event => {
-                    gleasonScore = event.target.value;
+                    lesionInfo.gleasonScore = event.target.value;
                     refreshOverlay();
                 });
             }
