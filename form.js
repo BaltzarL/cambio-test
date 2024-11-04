@@ -153,27 +153,29 @@ export class AcmeSubmitButton extends HTMLElement {
                 C: { top: [[28, 51], [37, 41], [56, 33], [75, 41], [85, 50]], middle: [[26, 62], [41, 57], [56, 57], [73, 58], [89, 63]], bottom: [[39, 94], [47, 91], [57, 88], [68, 91], [76, 93]] },
             };
 
-            function createOverlayShape(pointsArray, container, color) {
+            function createOverlayShape(pointsArray, container, color, title) {
                 const newOverlay = document.createElement('div');
                 newOverlay.classList.add('overlay-image');
                 newOverlay.style.backgroundColor = color;
                 newOverlay.style.width = "100%";
                 newOverlay.style.height = "100%";
+                newOverlay.title = title;
                 newOverlay.style.clipPath = `polygon(${pointsArray.map(point => `${point[0]}% ${point[1]}%`).join(', ')})`;
                 container.insertBefore(newOverlay, container.firstChild);
             }
 
-
             function getGleasonColor(value) {
-                // Ensure the value is within the range [0, 8]
-                value = Math.min(Math.max(value, 0), 8);
+                // Ensure the value is within the range [0, 10]
+                const max = 10
+                const min = 0
+                value = Math.min(Math.max(value, min), max);
 
                 // Define the RGBA values for yellow and dark red
                 const yellow = { r: 255, g: 255, b: 0, a: 0.5 };
-                const darkRed = { r: 139, g: 0, b: 0, a: 0.5 };
+                const darkRed = { r: 255, g: 0, b: 0, a: 0.5 };
 
                 // Calculate interpolation factor (from 0 to 1)
-                const t = value / 8;
+                const t = value / max;
 
                 // Interpolate each channel separately
                 const r = Math.round(yellow.r + (darkRed.r - yellow.r) * t);
@@ -199,7 +201,7 @@ export class AcmeSubmitButton extends HTMLElement {
 
                 const color = getGleasonColor(score);
 
-                createOverlayShape(selectedCoordinates, container, color);
+                createOverlayShape(selectedCoordinates, container, color, "Gleason score: " + score);
             }
 
             function updateSparingOverlay(sparingDx, sparingSin) {
