@@ -97,37 +97,38 @@ export class AcmeSubmitButton extends HTMLElement {
             return nodes;
         }
 
-        function setupLesion(locationSelector, gleasonScoreSelector) {
-            let lesionLocationRoots = [];
-            let gleasonScore = [];
-
-            const gleasonScoreRoot = querySelector(gleasonScoreSelector);
-            const lesionLocationInstance = querySelector(locationSelector);
-
-            // MutationObserver to update lesionLocationRoots dynamically
-            const observer = new MutationObserver(mutations => {
-                lesionLocationRoots = querySelectorAll(lesionLocationInstance, "c-input-select");
-                lesionLocationRoots.forEach(locationElement => {
-                    locationElement.addEventListener('input', event => {
-                        refreshOverlay();
-                    });
-                });
-                refreshOverlay();
-            });
-
-            // Start observing for changes
-            if (lesionLocationInstance) {
-                observer.observe(lesionLocationInstance, { childList: true });
-                lesionLocationRoots = querySelectorAll(lesionLocationInstance, "c-input-select");
-            }
-
-            gleasonScoreRoot?.addEventListener('input', event => {
-                gleasonScore = event.target.value;
-                refreshOverlay();
-            });
-        }
 
         setTimeout(() => {
+            function setupLesion(locationSelector, gleasonScoreSelector) {
+                let lesionLocationRoots = [];
+                let gleasonScore = [];
+
+                const gleasonScoreRoot = querySelector(gleasonScoreSelector);
+                const lesionLocationInstance = querySelector(locationSelector);
+
+                // MutationObserver to update lesionLocationRoots dynamically
+                const observer = new MutationObserver(mutations => {
+                    lesionLocationRoots = querySelectorAll(lesionLocationInstance, "c-input-select");
+                    lesionLocationRoots.forEach(locationElement => {
+                        locationElement.addEventListener('input', event => {
+                            refreshOverlay();
+                        });
+                    });
+                    refreshOverlay();
+                });
+
+                // Start observing for changes
+                if (lesionLocationInstance) {
+                    observer.observe(lesionLocationInstance, { childList: true });
+                    lesionLocationRoots = querySelectorAll(lesionLocationInstance, "c-input-select");
+                }
+
+                gleasonScoreRoot?.addEventListener('input', event => {
+                    gleasonScore = event.target.value;
+                    refreshOverlay();
+                });
+            }
+
             let prostateSparingDx = "";
             let prostateSparingSin = "";
             let lesionInfo = [
